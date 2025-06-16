@@ -55,7 +55,7 @@ export const CarruselInf = () => {
       <div className='flex justify-center mb-4'>
         <h1 className='text-5xl text-center mb-3 font-bold text-white'>
           Automatiza tu trabajo y <br />sé más {" "}
-          <span className="relative inline-block text-blue-500">
+          <span className="relative inline-block text-blue-600">
             {titles.map((title, index) => (
               <span
                 key={index}
@@ -95,14 +95,14 @@ export const CarruselInf = () => {
                 style={{ transitionDelay: `${delay}ms` }}
               >
                 <SpotlightCard
-                  className="h-full w-full"
-                  spotlightColor="rgba(0, 2, 145, 0.64)"
+                  className="h-full w-full border-2 border-white"
+                  spotlightColor="rgba(7, 8, 83, 0.64)"
                   backgroundImage={flow.backgroundImage}
                   backgroundIcon={flow.backgroundIcon}
                 >
                   <div className="flex flex-col items-center justify-center p-4 h-full relative z-10">
-                    <p className="text-xl text-blue-400 font-bold text-center mb-1">{flow.name}</p>
-                    <p className="text-xl  font-semibold text-center">{flow.description}</p>
+                    <p className="text-xl text-white font-bold text-center mb-1">{flow.name}</p>
+                    <p className="text-xl text-blue-400  font-semibold text-center">{flow.description}</p>
                   </div>
                 </SpotlightCard>
               </li>
@@ -125,14 +125,14 @@ export const CarruselInf = () => {
                 style={{ transitionDelay: `${delay}ms` }}
               >
                 <SpotlightCard
-                  className="h-full w-full"
-                  spotlightColor="rgba(0, 229, 255, 0.2)"
+                  className="h-full w-full border-2 border-white"
+                  spotlightColor="rgba(7, 8, 83, 0.64)"
                   backgroundImage={flow.backgroundImage}
                   backgroundIcon={flow.backgroundIcon}
                 >
                   <div className="flex flex-col items-center justify-center p-4 h-full relative z-10">
-                    <p className="text-xl text-blue-400 font-bold text-center mb-1">{flow.name}</p>
-                    <p className="text-xl  font-semibold text-center">{flow.description}</p>
+                    <p className="text-xl text-white font-bold text-center mb-1">{flow.name}</p>
+                    <p className="text-xl text-blue-400  font-semibold text-center">{flow.description}</p>
                   </div>
                 </SpotlightCard>
               </li>

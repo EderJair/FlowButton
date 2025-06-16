@@ -67,7 +67,7 @@ export const MobileSection = () => {
           {/* Botón */}
           <Button
             href="#"
-            variant="primary"
+            variant="secondary"
             className={`transition-all duration-700 ease-out transform delay-200
                        ${buttonVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >

@@ -36,15 +36,17 @@ export const Button = ({
     case 'secondary':
       // Estilos para un botón secundario (ej: fondo claro, texto oscuro)
       variantStyles = `
-        bg-gray-200 text-gray-800
-        hover:bg-gray-300
-        dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600
+        text-white
+        border-2 border-white
+        hover:bg-gray-600
+        duration-100
       `;
       break;
     case 'outline':
       // Estilos para un botón con solo borde (como tu botón de Login)
       variantStyles = `
         bg-blue-500 text-white
+        border-2 border-white
       `;
       break;
     // Puedes añadir más variantes aquí si las necesitas
