@@ -1,6 +1,6 @@
 // src/components/slide/CarruselInf.jsx
 
-import React, { useState, useEffect } from 'react'; // Importar useState y useEffect
+import React, { useState, useEffect, useMemo } from 'react'; // Añadir useMemo
 import SpotlightCard from '../card/SpotlightCard';
 import GmailIcon from '../../assets/icons/GmailIcon';
 import OpenAI from '../../assets/icons/OpenAI';
@@ -24,23 +24,55 @@ const flows = [
 
 export const CarruselInf = () => {
   const [cardsVisible, setCardsVisible] = useState(false);
+  const [titleNumber, setTitleNumber] = useState(0);
+  
+  const titles = useMemo(
+    () => ["eficaz", "rápido", "ágil", "eficiente", "inteligente"],
+    []
+  );
 
   useEffect(() => {
-    // Al montar el componente, activa la visibilidad de las tarjetas.
-    // Puedes añadir un pequeño setTimeout aquí si quieres un retraso inicial
-    // antes de que todas las tarjetas empiecen a aparecer.
     const timer = setTimeout(() => {
       setCardsVisible(true);
-    }, 100); // Pequeño retraso para que el componente se cargue antes de la animación
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === titles.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, titles]);
+
   return (
     <div className="overflow-hidden w-full group py-4">
       <div className='flex justify-center mb-4'>
-        {/* Aquí también podrías aplicar un efecto de entrada al título, similar a MobileSection */}
-        <h1 className='text-5xl mb-3 font-bold text-white'>Principales <span className='text-blue-500'>Flujos</span></h1>
+        <h1 className='text-5xl text-center mb-3 font-bold text-white'>
+          Automatiza tu trabajo y <br />sé más {" "}
+          <span className="relative inline-block text-blue-500">
+            {titles.map((title, index) => (
+              <span
+                key={index}
+                className={`absolute top-0 left-0 font-bold transition-all duration-500 ease-in-out transform
+                           ${titleNumber === index 
+                             ? 'opacity-100 translate-y-0' 
+                             : titleNumber > index 
+                               ? 'opacity-0 -translate-y-8' 
+                               : 'opacity-0 translate-y-8'
+                           }`}
+              >
+                {title}
+              </span>
+            ))}
+            <span className="invisible">{titles[0]}</span>
+          </span>
+        </h1>
       </div>
       <div className="
         flex flex-nowrap
@@ -51,8 +83,7 @@ export const CarruselInf = () => {
         {/* Primer conjunto de flujos */}
         <ul className="flex gap-10 text-white p-4 flex-shrink-0">
           {flows.map((flow, index) => {
-            // Calcula el retraso dinámicamente para cada tarjeta
-            const delay = 300 * index; // Cada tarjeta aparece 100ms después de la anterior
+            const delay = 300 * index;
 
             return (
               <li
@@ -61,17 +92,17 @@ export const CarruselInf = () => {
                            transition-all duration-700 ease-out transform
                            ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
                            `}
-                style={{ transitionDelay: `${delay}ms` }} // Aplica el retraso
+                style={{ transitionDelay: `${delay}ms` }}
               >
                 <SpotlightCard
                   className="h-full w-full"
-                  spotlightColor="rgba(0, 229, 255, 0.2)"
+                  spotlightColor="rgba(0, 2, 145, 0.64)"
                   backgroundImage={flow.backgroundImage}
                   backgroundIcon={flow.backgroundIcon}
                 >
                   <div className="flex flex-col items-center justify-center p-4 h-full relative z-10">
-                    <p className="text-xl font-semibold text-center mb-1">{flow.name}</p>
-                    <p className="text-sm text-gray-300 text-center">{flow.description}</p>
+                    <p className="text-xl text-blue-400 font-bold text-center mb-1">{flow.name}</p>
+                    <p className="text-xl  font-semibold text-center">{flow.description}</p>
                   </div>
                 </SpotlightCard>
               </li>
@@ -80,10 +111,8 @@ export const CarruselInf = () => {
         </ul>
 
         {/* Segundo conjunto de flujos (DUPLICADO) */}
-        {/* Las tarjetas duplicadas también necesitan el efecto de entrada */}
         <ul className="flex gap-10 text-white p-4 flex-shrink-0" aria-hidden="true">
           {flows.map((flow, index) => {
-            // Mismo cálculo de retraso para el segundo conjunto, asegurando que se vea bien
             const delay = 100 * index;
 
             return (
@@ -102,8 +131,8 @@ export const CarruselInf = () => {
                   backgroundIcon={flow.backgroundIcon}
                 >
                   <div className="flex flex-col items-center justify-center p-4 h-full relative z-10">
-                    <p className="text-xl font-semibold text-center mb-1">{flow.name}</p>
-                    <p className="text-sm text-gray-300 text-center">{flow.description}</p>
+                    <p className="text-xl text-blue-400 font-bold text-center mb-1">{flow.name}</p>
+                    <p className="text-xl  font-semibold text-center">{flow.description}</p>
                   </div>
                 </SpotlightCard>
               </li>

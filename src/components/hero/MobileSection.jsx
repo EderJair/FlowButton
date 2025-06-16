@@ -28,12 +28,12 @@ export const MobileSection = () => {
   }, []); // Se ejecuta solo una vez al montar el componente
 
   return (
-    <section className="bg-transparent dark:bg-transparent relative mb-10 overflow-hidden min-h-[600px] flex flex-col">
+    <section className="bg-transparent dark:bg-transparent relative overflow-hidden min-h-[600px] flex flex-col">
       <Aurora
-        colorStops={["#3A29FF","#3A29FF", "#3A29FF"]}
-        blend={0.5}
-        amplitude={1.0}
-        speed={0.8}
+        colorStops={["#3A29FF","#3A29FF", "#8c3390"]}
+        blend={0.3}
+        amplitude={0.8}
+        speed={1.5}
       />
 
       <div className="relative z-10 grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 flex-grow">
@@ -46,7 +46,7 @@ export const MobileSection = () => {
                        transition-all duration-700 ease-out transform
                        ${headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
-            Automatiza tus Operaciones: Flujos Inteligentes al Alcance de un
+            Flujos Inteligentes al Alcance de un
             <span
               className="inline-block text-blue-600 hover:text-blue-500 cursor-pointer
                          transition-all ease-in-out duration-300 ml-2"
@@ -92,8 +92,8 @@ export const MobileSection = () => {
             src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWxua3pueWswcndocjR4cG9jNGl5a2g5ZTZvd3gzZDlxcWwzZ2F3MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hDSy8w6rGHeTe/giphy.gif"
             alt="Flujo de automatización en acción"
             // Clases para el efecto de entrada suave de la imagen
-            className={`w-[500px] h-[350px] rounded-2xl border-white border-4 transform hover:rotate-3 hover:-translate-y-2
-                        transition-all duration-1000 ease-in-out
+            className={`w-[500px] h-[350px] rounded-2xl border-white border-4 rotate-3 transform hover:-translate-y-2
+                        transition-all duration-500 ease-in-out
                         ${imageVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
           />
         </div>
