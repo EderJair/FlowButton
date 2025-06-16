@@ -1,0 +1,83 @@
+/* src/App.css */
+
+@import "tailwindcss";
+
+@theme {
+  /*
+    Definimos la fuente Red Hat Display como una variable CSS personalizada.
+    `--font-sans` es una variable que Tailwind utiliza para su clase `font-sans`.
+    Al sobreescribirla aquí, le decimos a Tailwind que use esta fuente.
+  */
+  --font-sans: 'Red Hat Display', sans-serif;
+
+  /*
+    Tus otras definiciones de animaciones `@keyframes` y sus variables `---animate-*`
+    van directamente aquí, como ya lo tenías:
+  */
+  --animate-infinite-scroll: infinite-scroll-animation 40s linear infinite;
+
+  @keyframes infinite-scroll-animation {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(calc(-50% - 20px));
+    }
+  }
+
+  /*
+    Si quisieras definir un color personalizado, sería así directamente:
+    --color-brand-primary: #FF5733;
+    --color-brand-primary-500: #FF5733; // Si quieres usar una convención de escala
+  */
+}
+
+/*
+  Opcional: Aplicar la fuente a todo el `body` como fallback o default explícito.
+  Esto es útil para asegurar que cualquier texto que no tenga una clase `font-sans`
+  explicita también use Red Hat Display.
+*/
+body {
+  font-family: var(--font-sans); /* Usar la variable de fuente definida en @theme */
+
+}
+
+/* Estilos para la barra de scroll (scrollbar) */
+/* Estos estilos deben ir FUERA del bloque @theme */
+
+/* General Scrollbar (Track) para WebKit */
+::-webkit-scrollbar {
+  width: 42px; /* Ancho del scrollbar vertical */
+  height: 42px; /* Altura del scrollbar horizontal (si aplica) */
+  background-color: #1a202c; /* Color del fondo del área del scrollbar (track) */
+  border-radius: 0px; /* Bordes cuadrados para el track */
+}
+
+/* Scrollbar Thumb (el "mango" que arrastras) para WebKit */
+::-webkit-scrollbar-thumb {
+  background-color: #2938e0; /* Color principal del "mango" (azul cielo de Tailwind) */
+  border-radius: 0px; /* Bordes cuadrados para el thumb */
+  border: 3px solid #1a202c; /* Un pequeño borde para separarlo del track (mismo color que el track) */
+}
+
+/* Scrollbar Thumb (en hover) para WebKit */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2938e0; /* Un azul ligeramente más oscuro al pasar el ratón */
+}
+
+/* Scrollbar Corner (esquina donde se unen scrollbar vertical y horizontal, si ambos están presentes) para WebKit */
+::-webkit-scrollbar-corner {
+  background-color: #2938e0; /* Color de la esquina */
+}
+
+/* Estilos para navegadores Firefox (soporte limitado) */
+html {
+  scrollbar-width: auto; /* 'auto' | 'thin' | 'none'. 'auto' para el ancho por defecto del navegador */
+  /* Ajustado el scrollbar-color de Firefox para que coincida con los colores WebKit */
+  scrollbar-color: #4e4e4e #1a202c; /* thumb color (gris) track color (gris oscuro) */
+}
+
+/* Puedes dejar esta regla de CSS para la fuente de código si la usas */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

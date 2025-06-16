@@ -1,0 +1,22 @@
+/* src/components/Aurora/Aurora.css */
+
+.aurora-container {
+  width: 100%;
+  height: 100%;
+  position: absolute; /* Para que el canvas se posicione de forma absoluta */
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Para que no bloquee interacciones con elementos debajo */
+  z-index: -1; /* Para enviarlo al fondo */
+}
+
+/*
+  Es importante que el canvas generado por OGL también ocupe el 100% del contenedor.
+  El código JS ya lo hace con `renderer.setSize`, pero estas reglas CSS
+  aseguran que el elemento <canvas> en sí mismo cubra el div padre.
+*/
+.aurora-container canvas {
+  width: 100%;
+  height: 100%;
+  display: block; /* Elimina espacio extra que algunos navegadores añaden al canvas */
+}
