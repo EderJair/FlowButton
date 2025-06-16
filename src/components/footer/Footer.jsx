@@ -2,7 +2,7 @@
 import React from 'react';
 // Importa las versiones de tus componentes de íconos para X y GitHub
 import XIcon from '../../assets/icons/XIcon';
-import GithubIcon from '../../assets/icons/GithubIcon';
+import GithubIcon from '../../assets/icons/GitHubIcon';
 
 const Footer = () => {
   return (
