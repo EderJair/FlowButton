@@ -1,7 +1,7 @@
 // src/components/hero/MobileSection.jsx
 
 import React, { useState, useEffect } from "react";
-import Aurora from '../Aurora/Aurora';
+import Aurora from '../aurora/Aurora';
 import { Button } from '../button/Button';
 
 export const MobileSection = () => {
