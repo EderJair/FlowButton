@@ -41,7 +41,7 @@ export const MobileSection = () => {
         <div className="mr-auto place-self-center lg:col-span-6">
           {/* Título */}
           <h1
-            className={`max-w-2xl mb-8 text-3xl font-extrabold tracking-tight leading-none
+            className={`max-w-2xl mb-8 text-3xl text-white font-extrabold tracking-tight leading-none
                        md:text-4xl xl:text-5xl dark:text-white
                        transition-all duration-700 ease-out transform
                        ${headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}

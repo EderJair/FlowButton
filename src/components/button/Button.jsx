@@ -38,7 +38,8 @@ export const Button = ({
       variantStyles = `
         text-white
         border-2 border-white
-        hover:bg-gray-600
+        hover:bg-gray-800
+        hover:-translate-y-1
         duration-100
       `;
       break;
