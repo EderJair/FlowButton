@@ -1,31 +1,34 @@
-// src/components/hero/MobileSection.jsx
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'; // Agregar esta línea
 import Aurora from '../aurora/Aurora';
 import { Button } from '../button/Button';
 
 export const MobileSection = () => {
-  // Estados para controlar la visibilidad y el estado de la animación de cada grupo de elementos
+  const navigate = useNavigate(); // Agregar esta línea
+  
   const [headingVisible, setHeadingVisible] = useState(false);
   const [paragraphVisible, setParagraphVisible] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
 
   useEffect(() => {
-    // Secuencia de aparición con retrasos
-    const timer1 = setTimeout(() => setHeadingVisible(true), 200); // Título aparece primero
-    const timer2 = setTimeout(() => setParagraphVisible(true), 500); // Párrafo después del título
-    const timer3 = setTimeout(() => setButtonVisible(true), 800); // Botón después del párrafo
-    const timer4 = setTimeout(() => setImageVisible(true), 1100); // Imagen al final, dando tiempo a los textos
+    const timer1 = setTimeout(() => setHeadingVisible(true), 200);
+    const timer2 = setTimeout(() => setParagraphVisible(true), 500);
+    const timer3 = setTimeout(() => setButtonVisible(true), 800);
+    const timer4 = setTimeout(() => setImageVisible(true), 1100);
 
-    // Limpieza de los temporizadores
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
       clearTimeout(timer4);
     };
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, []);
+
+  // Agregar esta función
+  const handleGetStarted = () => {
+    navigate('/dashboard');
+  };
 
   return (
     <section className="bg-transparent dark:bg-transparent relative overflow-hidden min-h-[600px] flex flex-col">
@@ -37,11 +40,9 @@ export const MobileSection = () => {
       />
 
       <div className="relative z-10 grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 flex-grow">
-        {/* Contenedor de texto */}
         <div className="mr-auto place-self-center lg:col-span-6">
-          {/* Título */}
           <h1
-            className={`max-w-2xl mb-8 text-3xl text-white font-extrabold tracking-tight leading-none
+            className={`max-w-2xl mb-8 text-3xl font-extrabold tracking-tight leading-none
                        md:text-4xl xl:text-5xl dark:text-white
                        transition-all duration-700 ease-out transform
                        ${headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
@@ -54,7 +55,7 @@ export const MobileSection = () => {
               Boton.
             </span>
           </h1>
-          {/* Párrafo */}
+          
           <p
             className={`max-w-2xl mb-6 font-light text-gray-300 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400
                        transition-all duration-700 ease-out transform delay-100
@@ -64,34 +65,36 @@ export const MobileSection = () => {
             facturas y más. Con un clic desde tu dashboard, automatiza tu
             gestión y libera tu verdadero potencial.
           </p>
-          {/* Botón */}
-          <Button
-            href="#"
-            variant="secondary"
-            className={`transition-all duration-700 ease-out transform delay-200
+          
+          {/* Cambiar solo esta parte del botón */}
+          <div 
+            onClick={handleGetStarted}
+            className={`transition-all duration-700 ease-out transform delay-200 cursor-pointer
                        ${buttonVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
-            Comenzar
-            <svg
-                className="w-6 h-6 ml-3 -mr-1" fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+            <Button
+              variant="secondary"
             >
-                <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-                ></path>
-            </svg>
-          </Button>
+              Comenzar
+              <svg
+                  className="w-6 h-6 ml-3 -mr-1" fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                  <path
+                  fillRule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                  ></path>
+              </svg>
+            </Button>
+          </div>
         </div>
 
-        {/* Contenedor de la imagen */}
         <div className="hidden lg:mt-0 lg:col-span-6 lg:flex justify-center items-center rounded-lg overflow-hidden">
           <img
             src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWxua3pueWswcndocjR4cG9jNGl5a2g5ZTZvd3gzZDlxcWwzZ2F3MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hDSy8w6rGHeTe/giphy.gif"
             alt="Flujo de automatización en acción"
-            // Clases para el efecto de entrada suave de la imagen
             className={`w-[500px] h-[350px] rounded-2xl border-white border-4 rotate-3 transform hover:-translate-y-2
                         transition-all duration-500 ease-in-out
                         ${imageVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
