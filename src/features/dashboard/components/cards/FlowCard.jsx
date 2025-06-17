@@ -20,7 +20,7 @@ const FlowCard = ({
     <div 
       className={`
         relative overflow-hidden rounded-xl cursor-pointer
-        transition-all duration-700 ease-out transform
+        transition-all duration-200 transform
         hover:scale-105 hover:shadow-xl
         ${isVisible 
           ? 'opacity-100 translate-y-0' 

@@ -1,5 +1,6 @@
 // src/features/dashboard/pages/Workflows.jsx
 import React, { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { FlowCard } from '../components/cards';
 import { GmailOpenAIModal } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
@@ -39,10 +40,10 @@ const Workflows = () => {
     }, 300);
 
     return () => clearTimeout(initialTimer);
-  }, []);
-  const handleFlowClick = (flow) => {
+  }, []);  const handleFlowClick = (flow) => {
     if (flow.status === 'Activo') {
       if (flow.id === 'gmail-openai') {
+        // Toast cuando se abre Gmail + OpenAI
         // Abrir modal para Gmail + OpenAI
         setModalState({
           isOpen: true,
@@ -50,19 +51,34 @@ const Workflows = () => {
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
-        // Aquí puedes agregar la lógica para otros flujos activos
+        
+        toast.success(`Activando ${flow.title}`, {
+          description: 'El flujo se está configurando...',
+          icon: '⚡',
+          duration: 3000
+        });
       }
     } else {
       console.log('Flujo próximamente:', flow.title);
-      // Aquí puedes mostrar información sobre cuándo estará disponible
+      
+      // Toast para flujos no disponibles
+      toast.warning('Flujo próximamente', {
+        description: `${flow.title} estará disponible pronto. ¡Mantente atento!`,
+        icon: '🚧',
+        duration: 4000,
+        action: {
+          label: 'Notificarme',
+          onClick: () => toast.success('Te notificaremos cuando esté listo', { icon: '🔔' })
+        }
+      });
     }
   };
-
   const handleModalClose = () => {
     setModalState({
       isOpen: false,
       flowType: null
     });
+    
   };
 
   const handleModalSubmit = (formData) => {
@@ -71,7 +87,6 @@ const Workflows = () => {
     // Por ejemplo: enviar el prompt a OpenAI y luego enviar el email generado via Gmail API
     
     // Simular procesamiento exitoso
-    alert(`Email generado y enviado a: ${formData.destinatario}\nPrompt: ${formData.prompt}`);
   };
 
   const activeCount = getActiveFlows().length;
@@ -138,7 +153,7 @@ const Workflows = () => {
       </div>      {/* Grid de Flujos */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredFlows.map((flow, index) => {
-          const delay = 150 * index; // Retraso escalonado para cada tarjeta
+          const delay = 10 * index; // Retraso escalonado para cada tarjeta
           
           return (
             <FlowCard

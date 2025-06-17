@@ -54,15 +54,13 @@ export const useGmailFlow = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
-
-  // Verificar conexión Gmail
+  }, []);  // Verificar conexión N8N
   const checkConnection = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     
     try {
-      const response = await gmailService.checkGmailConnection();
+      const response = await gmailService.checkN8nStatus();
       return response;
     } catch (err) {
       setError(err.message);

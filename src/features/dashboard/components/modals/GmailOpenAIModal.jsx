@@ -1,6 +1,7 @@
 // src/features/dashboard/components/modals/GmailOpenAIModal.jsx
 
 import React, { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { GmailIcon, OpenAI } from '../../../../assets/icons';
 import { useGmailFlow } from '../../../../hooks/useGmailFlow';
 
@@ -9,9 +10,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
     destinatario: '',
     prompt: ''
   });
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Hook para gestionar el flujo Gmail + OpenAI
+  const [isVisible, setIsVisible] = useState(false);  // Hook para gestionar el flujo Gmail + OpenAI
   const {
     isLoading,
     error,
@@ -19,11 +18,17 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
     generateAndSendEmail,
     clearStates
   } = useGmailFlow();
-
   // Efecto para mostrar el modal
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => setIsVisible(true), 50);
+      
+      // Toast de bienvenida al abrir el modal
+      toast.info('¡Generador de emails con IA!', {
+        description: 'Completa los campos y la IA creará un email personalizado',
+        icon: '🤖',
+        duration: 3000
+      });
     } else {
       setIsVisible(false);
     }
@@ -42,12 +47,24 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
       ...prev,
       [name]: value
     }));
-  };
-  const handleSubmit = async (e) => {
+  };  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.destinatario || !formData.prompt) {
-      alert('Por favor completa todos los campos');
+      toast.warning('Campos incompletos', {
+        description: 'Por favor completa todos los campos antes de enviar.',
+        icon: '⚠️'
+      });
+      return;
+    }
+
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.destinatario)) {
+      toast.error('Email inválido', {
+        description: 'Por favor ingresa un correo electrónico válido.',
+        icon: '📧'
+      });
       return;
     }
 
@@ -59,14 +76,30 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
         onSubmit(formData, result);
       }
       
-      // Mostrar mensaje de éxito
-      alert('¡Email enviado exitosamente!');
+      // Mostrar toast de éxito con información rica
+      toast.success('¡Email enviado exitosamente!', {
+        description: `Tu email ha sido generado con IA y enviado a ${formData.destinatario}`,
+        icon: '🚀',
+        duration: 5000,
+        action: {
+          label: 'Ver detalles',
+          onClick: () => console.log('Detalles del email:', result)
+        }
+      });
       
-      // Cerrar modal
-      onClose();
+      // Cerrar modal después de un breve delay
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+      
     } catch (error) {
       console.error('Error al enviar email:', error);
-      alert(`Error al enviar el email: ${error.message}`);
+      
+      toast.error('Error al enviar email', {
+        description: error.message || 'Ocurrió un error inesperado al procesar tu solicitud.',
+        icon: '❌',
+        duration: 6000
+      });
     }
   };
 
@@ -230,8 +263,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
                 </>
               )}
             </button>
-          </div>
-        </form>
+          </div>        </form>
       </div>
     </div>
   );
