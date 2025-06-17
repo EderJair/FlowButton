@@ -69,7 +69,7 @@ export const DASHBOARD_FLOWS = [
   {
     id: 'legal-consultant',
     title: 'Abogado Consultor',
-    status: 'Próximamente',
+    status: 'Activo',
     description: 'Consultoría legal inteligente',
     automationCount: 3,
     iconCombo: [OpenAI, DocumentCheckIcon],
