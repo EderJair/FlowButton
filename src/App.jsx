@@ -1,17 +1,30 @@
-import { Routes, Route } from 'react-router-dom'
-import { Navbar } from './components/navbar/Navbar.jsx'
-import { HomePage } from './pages/HomePage.jsx'
-import { Dashboard } from './pages/Dashboard.jsx'
-import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { Navbar } from './components'
+import { HomePage } from './pages'
+import { 
+  DashboardLayout, 
+  Workflows,
+  Analytics
+} from './features'
+import './assets/styles/App.css'
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* Public routes */}
+        <Route path="/" element={
+          <>
+            <Navbar />
+            <HomePage />
+          </>
+        } />
+          {/* Dashboard routes */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Navigate to="/dashboard/workflows" replace />} />
+          <Route path="workflows" element={<Workflows />} />
+          <Route path="analytics" element={<Analytics />} />
+        </Route>
       </Routes>
     </div>
   )

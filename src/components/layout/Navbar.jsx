@@ -1,7 +1,7 @@
-// src/components/Navbar/Navbar.jsx
+// src/components/layout/Navbar.jsx
 
 import React from 'react';
-import { Button } from '../button/Button'; // <-- Importa el nuevo componente Button
+import { Button } from '../common/Button';
 
 export const Navbar = () => {
   return (
