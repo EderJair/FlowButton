@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import DashboardNavbar from './DashboardNavbar';
 import DashboardSplash from './DashboardSplash';
 import { Aurora } from '../../../components';
 
@@ -54,22 +53,27 @@ const DashboardLayout = () => {
       
       {/* Content with backdrop */}      <div className={`flex h-screen w-full relative z-10 transition-all duration-600 ease-out transform ${
         isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}>
-        {/* Sidebar */}
+      }`}>        {/* Sidebar */}
         <Sidebar 
           isOpen={sidebarOpen} 
           onClose={() => setSidebarOpen(false)} 
+          onBackToHome={handleBackToHome}
           isLoaded={isLoaded}
-        />
-        
-        {/* Main content area */}
+        />        {/* Main content area */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Top Navigation */}          <DashboardNavbar 
-            onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
-            onBackToHome={handleBackToHome}
-            isLoaded={isLoaded}
-          />
-            {/* Main content */}          <main className={`flex-1 overflow-x-hidden overflow-y-auto bg-black/10 backdrop-blur-sm 
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className={`lg:hidden fixed top-4 left-4 z-40 p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all duration-200 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Main content */}<main className={`flex-1 overflow-x-hidden overflow-y-auto bg-black/10 backdrop-blur-sm 
             transition-all duration-500 ease-out delay-75 transform ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>

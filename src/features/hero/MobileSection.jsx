@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Aurora, Button } from '../../components';
+import { Button } from '../../components';
 import { ANIMATION_DELAYS } from '../../constants';
 
 export const MobileSection = ({ onNavigateToDashboard }) => {
@@ -24,15 +24,7 @@ export const MobileSection = ({ onNavigateToDashboard }) => {
       onNavigateToDashboard();
     }
   };
-
   return (    <section className="bg-transparent dark:bg-transparent relative overflow-hidden min-h-[600px] flex flex-col">
-      <Aurora
-        colorStops={["#3A29FF","#3A29FF", "#8c3390"]}
-        blend={0.3}
-        amplitude={0.8}
-        speed={1.5}
-      />
-
       <div className="relative z-10 grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 flex-grow">
         <div className="mr-auto place-self-center lg:col-span-6">          <h1
             className={`max-w-2xl mb-8 text-3xl font-extrabold tracking-tight leading-none

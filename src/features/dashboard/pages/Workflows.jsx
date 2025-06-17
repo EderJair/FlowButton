@@ -1,11 +1,16 @@
 // src/features/dashboard/pages/Workflows.jsx
 import React, { useState, useEffect } from 'react';
 import { FlowCard } from '../components/cards';
+import { GmailOpenAIModal } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
 const Workflows = () => {
   const [selectedFilter, setSelectedFilter] = useState('all'); // 'all', 'active', 'upcoming'
   const [cardsVisible, setCardsVisible] = useState(false);
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    flowType: null
+  });
   
   const getFilteredFlows = () => {
     switch (selectedFilter) {
@@ -35,15 +40,38 @@ const Workflows = () => {
 
     return () => clearTimeout(initialTimer);
   }, []);
-
   const handleFlowClick = (flow) => {
     if (flow.status === 'Activo') {
-      console.log('Abriendo flujo:', flow.title);
-      // Aquí puedes agregar la lógica para abrir/activar el flujo
+      if (flow.id === 'gmail-openai') {
+        // Abrir modal para Gmail + OpenAI
+        setModalState({
+          isOpen: true,
+          flowType: 'gmail-openai'
+        });
+      } else {
+        console.log('Abriendo flujo:', flow.title);
+        // Aquí puedes agregar la lógica para otros flujos activos
+      }
     } else {
       console.log('Flujo próximamente:', flow.title);
       // Aquí puedes mostrar información sobre cuándo estará disponible
     }
+  };
+
+  const handleModalClose = () => {
+    setModalState({
+      isOpen: false,
+      flowType: null
+    });
+  };
+
+  const handleModalSubmit = (formData) => {
+    console.log('Datos del formulario Gmail + OpenAI:', formData);
+    // Aquí procesarías los datos y harías la llamada a la API
+    // Por ejemplo: enviar el prompt a OpenAI y luego enviar el email generado via Gmail API
+    
+    // Simular procesamiento exitoso
+    alert(`Email generado y enviado a: ${formData.destinatario}\nPrompt: ${formData.prompt}`);
   };
 
   const activeCount = getActiveFlows().length;
@@ -128,9 +156,7 @@ const Workflows = () => {
             />
           );
         })}
-      </div>
-
-      {/* Empty State */}
+      </div>      {/* Empty State */}
       {filteredFlows.length === 0 && (
         <div className="text-center py-12">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20">
@@ -143,6 +169,13 @@ const Workflows = () => {
           </div>
         </div>
       )}
+
+      {/* Modal Gmail + OpenAI */}
+      <GmailOpenAIModal
+        isOpen={modalState.isOpen && modalState.flowType === 'gmail-openai'}
+        onClose={handleModalClose}
+        onSubmit={handleModalSubmit}
+      />
     </div>
   );
 };

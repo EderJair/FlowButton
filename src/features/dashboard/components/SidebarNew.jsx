@@ -168,7 +168,7 @@ const Sidebar = ({ isOpen, onClose, isLoaded = true, onBackToHome }) => {
                   <span className="text-sm font-bold text-white">U</span>
                 </div>
                 <div className="ml-3 flex-1">
-                  <div className="text-sm font-medium text-white">Jair</div>
+                  <div className="text-sm font-medium text-white">Usuario</div>
                   <div className="text-xs text-white/70">admin@flowbutton.com</div>
                 </div>
               </div>
