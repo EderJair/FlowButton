@@ -80,11 +80,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
       toast.success('¡Email enviado exitosamente!', {
         description: `Tu email ha sido generado con IA y enviado a ${formData.destinatario}`,
         icon: '🚀',
-        duration: 5000,
-        action: {
-          label: 'Ver detalles',
-          onClick: () => console.log('Detalles del email:', result)
-        }
+        duration: 3000,
       });
       
       // Cerrar modal después de un breve delay

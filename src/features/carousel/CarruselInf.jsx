@@ -65,7 +65,7 @@ export const CarruselInf = () => {
   }, [titleNumber, titles]);
 
   return (
-    <div className="overflow-hidden w-full group py-4">
+    <div className="overflow-hidden w-full group">
       <div className='flex justify-center mb-4'>
         <h1 className='text-5xl text-center mb-3 font-bold text-white'>
           Automatiza tu trabajo y sé <br /> más {" "}
@@ -95,7 +95,7 @@ export const CarruselInf = () => {
         group-hover:animation-play-state-paused
       ">
         {/* Primer conjunto de flujos */}
-        <ul className="flex gap-10 text-white p-4 flex-shrink-0">
+        <ul className="flex gap-10 text-white p-4 mb-1 flex-shrink-0">
           {flows.map((flow, index) => {
             const delay = 300 * index;
 
@@ -111,7 +111,7 @@ export const CarruselInf = () => {
                   className="h-full w-full"
                   spotlightColor="rgba(7, 8, 83, 0.64)"
                 >
-                  <div className="flex flex-col items-center justify-center p-4 h-full relative z-10">
+                  <div className="flex flex-col items-center justify-center mb-4 h-full relative z-10">
                     {/* SVG Icon arriba */}
                     <div className="mb-4 flex-shrink-0">
                       <flow.backgroundIcon className="w-12 h-12 text-blue-400" />
@@ -121,7 +121,6 @@ export const CarruselInf = () => {
                       <p className="text-lg text-white font-bold text-center mb-1">{flow.name}</p>
                       <p className="text-lg text-blue-400 font-semibold text-center">{flow.description}</p>
                     </div>
-                    <h1>-------</h1>
                   </div>
                 </SpotlightCard>
               </li>
@@ -130,7 +129,7 @@ export const CarruselInf = () => {
         </ul>
 
         {/* Segundo conjunto de flujos (DUPLICADO) */}
-        <ul className="flex gap-10 text-white p-4 flex-shrink-0" aria-hidden="true">
+        <ul className="flex gap-10 text-white p-4 mb-1 flex-shrink-0" aria-hidden="true">
           {flows.map((flow, index) => {
             const delay = 100 * index;
 
@@ -146,7 +145,7 @@ export const CarruselInf = () => {
                   className="h-full w-full"
                   spotlightColor="rgba(7, 8, 83, 0.64)"
                 >
-                  <div className="flex flex-col items-center justify-center p-4 h-full relative z-10">
+                  <div className="flex flex-col items-center justify-center  h-full relative z-10">
                     {/* SVG Icon arriba */}
                     <div className="mb-4 flex-shrink-0">
                       <flow.backgroundIcon className="w-12 h-12 text-blue-400" />
@@ -156,7 +155,6 @@ export const CarruselInf = () => {
                       <p className="text-lg text-white font-bold text-center mb-1">{flow.name}</p>
                       <p className="text-lg text-blue-400 font-semibold text-center">{flow.description}</p>
                     </div>
-                    <h1>-------</h1>
                   </div>
                 </SpotlightCard>
               </li>

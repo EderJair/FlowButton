@@ -47,11 +47,10 @@ export const DASHBOARD_FLOWS = [
     automationCount: 3,
     iconCombo: [GrowthIcon, DashboardIcon],
     category: 'location'
-  },
-  {
+  },  {
     id: 'exchange-stock',
     title: 'Tipo de Cambio + Bolsa',
-    status: 'Próximamente',
+    status: 'Activo',
     description: 'Información financiera y bursátil',
     automationCount: 3,
     iconCombo: [ShoppingCartIcon, GrowthIcon],

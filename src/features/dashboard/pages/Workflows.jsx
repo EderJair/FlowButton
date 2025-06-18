@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { FlowCard } from '../components/cards';
-import { GmailOpenAIModal } from '../components/modals';
+import { GmailOpenAIModal, InvoiceAnalysisModal, ExchangeStockModal, LegalConsultantModal } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
 const Workflows = () => {
@@ -43,11 +43,28 @@ const Workflows = () => {
   }, []);  const handleFlowClick = (flow) => {
     if (flow.status === 'Activo') {
       if (flow.id === 'gmail-openai') {
-        // Toast cuando se abre Gmail + OpenAI
         // Abrir modal para Gmail + OpenAI
         setModalState({
           isOpen: true,
           flowType: 'gmail-openai'
+        });
+      } else if (flow.id === 'invoice-reader') {
+        // Abrir modal para Lector de Facturas
+        setModalState({
+          isOpen: true,
+          flowType: 'invoice-reader'
+        });
+      } else if (flow.id === 'exchange-stock') {
+        // Abrir modal para Tipo de Cambio + Bolsa
+        setModalState({
+          isOpen: true,
+          flowType: 'exchange-stock'
+        });
+      } else if (flow.id === 'legal-consultant') {
+        // Abrir modal para Abogado Consultor
+        setModalState({
+          isOpen: true,
+          flowType: 'legal-consultant'
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
@@ -183,13 +200,39 @@ const Workflows = () => {
             </p>
           </div>
         </div>
-      )}
-
-      {/* Modal Gmail + OpenAI */}
+      )}      {/* Modal Gmail + OpenAI */}
       <GmailOpenAIModal
         isOpen={modalState.isOpen && modalState.flowType === 'gmail-openai'}
         onClose={handleModalClose}
         onSubmit={handleModalSubmit}
+      />
+
+      {/* Modal Lector de Facturas */}
+      <InvoiceAnalysisModal
+        isOpen={modalState.isOpen && modalState.flowType === 'invoice-reader'}
+        onClose={handleModalClose}
+        onSubmit={(formData, result) => {
+          console.log('Datos del lector de facturas:', formData, result);
+          // Aquí procesarías los resultados del análisis
+        }}
+      />      {/* Modal Tipo de Cambio + Bolsa */}
+      <ExchangeStockModal
+        isOpen={modalState.isOpen && modalState.flowType === 'exchange-stock'}
+        onClose={handleModalClose}
+        onSubmit={(data) => {
+          console.log('Datos financieros:', data);
+          // Aquí procesarías los datos financieros
+        }}
+      />
+
+      {/* Modal Abogado Consultor */}
+      <LegalConsultantModal
+        isOpen={modalState.isOpen && modalState.flowType === 'legal-consultant'}
+        onClose={handleModalClose}
+        onSubmit={(chatData) => {
+          console.log('Datos de consulta legal:', chatData);
+          // Aquí procesarías los datos de la consulta legal
+        }}
       />
     </div>
   );
