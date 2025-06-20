@@ -2,6 +2,7 @@
 export { default as DashboardHome } from './DashboardHome';
 export { default as EmailAutomation } from './EmailAutomation';
 export { default as Workflows } from './Workflows';
+export { default as Analytics } from './Analytics';
 
 // Páginas básicas para las otras secciones
 export const InvoiceManagement = () => (
@@ -28,7 +29,7 @@ export const Notifications = () => (
   </div>
 );
 
-export const Analytics = () => (
+export const AnalyticsPlaceholder = () => (
   <div className="space-y-6">
     <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics</h2>
     <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-lg border border-white/20 dark:border-gray-700/50">

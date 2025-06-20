@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { FlowCard } from '../components/cards';
-import { GmailOpenAIModal, InvoiceAnalysisModal, ExchangeStockModal, LegalConsultantModal } from '../components/modals';
+import { AgenteMadreModal, GmailOpenAIModal, InvoiceAnalysisModal, ExchangeStockModal, LegalConsultantModal, WeatherMapsModal } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
 const Workflows = () => {
@@ -42,7 +42,13 @@ const Workflows = () => {
     return () => clearTimeout(initialTimer);
   }, []);  const handleFlowClick = (flow) => {
     if (flow.status === 'Activo') {
-      if (flow.id === 'gmail-openai') {
+      if (flow.id === 'agente-madre') {
+        // Abrir modal para Agente Madre
+        setModalState({
+          isOpen: true,
+          flowType: 'agente-madre'
+        });
+      } else if (flow.id === 'gmail-openai') {
         // Abrir modal para Gmail + OpenAI
         setModalState({
           isOpen: true,
@@ -59,12 +65,17 @@ const Workflows = () => {
         setModalState({
           isOpen: true,
           flowType: 'exchange-stock'
-        });
-      } else if (flow.id === 'legal-consultant') {
+        });      } else if (flow.id === 'legal-consultant') {
         // Abrir modal para Abogado Consultor
         setModalState({
           isOpen: true,
           flowType: 'legal-consultant'
+        });
+      } else if (flow.id === 'weather-maps') {
+        // Abrir modal para Meteorología + Google Maps
+        setModalState({
+          isOpen: true,
+          flowType: 'weather-maps'
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
@@ -200,7 +211,17 @@ const Workflows = () => {
             </p>
           </div>
         </div>
-      )}      {/* Modal Gmail + OpenAI */}
+      )}      {/* Modal Agente Madre */}
+      <AgenteMadreModal
+        isOpen={modalState.isOpen && modalState.flowType === 'agente-madre'}
+        onClose={handleModalClose}
+        onSubmit={(masterData) => {
+          console.log('Datos del Agente Madre:', masterData);
+          // Aquí procesarías los comandos y datos del Agente Madre
+        }}
+      />
+
+      {/* Modal Gmail + OpenAI */}
       <GmailOpenAIModal
         isOpen={modalState.isOpen && modalState.flowType === 'gmail-openai'}
         onClose={handleModalClose}
@@ -223,15 +244,23 @@ const Workflows = () => {
           console.log('Datos financieros:', data);
           // Aquí procesarías los datos financieros
         }}
-      />
-
-      {/* Modal Abogado Consultor */}
+      />      {/* Modal Abogado Consultor */}
       <LegalConsultantModal
         isOpen={modalState.isOpen && modalState.flowType === 'legal-consultant'}
         onClose={handleModalClose}
         onSubmit={(chatData) => {
           console.log('Datos de consulta legal:', chatData);
           // Aquí procesarías los datos de la consulta legal
+        }}
+      />
+
+      {/* Modal Meteorología + Google Maps */}
+      <WeatherMapsModal
+        isOpen={modalState.isOpen && modalState.flowType === 'weather-maps'}
+        onClose={handleModalClose}
+        onSubmit={(weatherData) => {
+          console.log('Datos meteorológicos:', weatherData);
+          // Aquí procesarías los datos meteorológicos
         }}
       />
     </div>

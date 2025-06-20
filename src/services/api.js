@@ -20,13 +20,13 @@ const apiRequest = async (endpoint, options = {}) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }  try {
-    // Removido: console.log de URL y configuración (muy verbosos)
+    console.log(`🌐 API Request: ${config.method || 'GET'} ${url}`);
     
     const response = await fetch(url, config);
     
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Error response:', response.status, response.statusText);
+      console.error(`❌ API Error [${response.status}] ${url}:`, response.statusText);
       console.error('❌ Error body:', errorText);
       
       let errorData = {};
@@ -40,10 +40,10 @@ const apiRequest = async (endpoint, options = {}) => {
     }
     
     const data = await response.json();
-    // Removido: console.log de respuesta exitosa (muy verboso)
+    console.log(`✅ API Success [${response.status}] ${url}`);
     return data;
   } catch (error) {
-    console.error('API Request Error:', error);
+    console.error(`💥 API Request Failed [${url}]:`, error);
     throw error;
   }
 };

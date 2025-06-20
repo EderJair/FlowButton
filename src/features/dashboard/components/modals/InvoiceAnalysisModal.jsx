@@ -184,19 +184,17 @@ const InvoiceAnalysisModal = ({ isOpen, onClose, onSubmit }) => {  const [formDa
   };
 
   if (!isOpen) return null;
-
   return (
     <div 
       className={`
         fixed inset-0 z-50 flex items-center justify-center p-4
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
+        overflow-hidden
       `}
       onClick={handleOverlayClick}
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      
       {/* Modal */}
       <div 
         className={`

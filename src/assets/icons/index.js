@@ -10,3 +10,5 @@ export { default as DocumentCheckIcon } from './DocumentCheckIcon';
 export { default as FlowConnectIcon } from './FlowConnectIcon';
 export { default as GitHubIcon } from './GitHubIcon';
 export { default as XIcon } from './XIcon';
+export { default as WeatherIcon } from './WeatherIcon';
+export { default as MapIcon } from './MapIcon';

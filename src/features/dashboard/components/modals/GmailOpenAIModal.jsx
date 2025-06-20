@@ -17,10 +17,16 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
     success,
     generateAndSendEmail,
     clearStates
-  } = useGmailFlow();
-  // Efecto para mostrar el modal
+  } = useGmailFlow();  // Efecto para mostrar el modal y prevenir scroll
   useEffect(() => {
     if (isOpen) {
+      // Prevenir scroll del body
+      document.body.style.overflow = 'hidden';
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      
       setTimeout(() => setIsVisible(true), 50);
       
       // Toast de bienvenida al abrir el modal
@@ -30,8 +36,30 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
         duration: 3000
       });
     } else {
+      // Restaurar scroll del body
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.overflow = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
       setIsVisible(false);
     }
+    
+    return () => {
+      if (isOpen) {
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.overflow = '';
+        document.body.style.width = '';
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+      }
+    };
   }, [isOpen]);
   // Limpiar formulario al cerrar
   useEffect(() => {
@@ -106,18 +134,17 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
   };
 
   if (!isOpen) return null;
-
-  return (    <div 
+  return (
+    <div 
       className={`
         fixed inset-0 z-50 flex items-center justify-center p-4
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
+        overflow-hidden
       `}
       onClick={handleOverlayClick}
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
-      {/* Overlay con blur */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      
       {/* Modal */}
       <div 
         className={`
@@ -127,7 +154,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
           transition-all duration-300 ease-out transform
           ${isVisible ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}
         `}
-      >        {/* Header */}
+      >{/* Header */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
