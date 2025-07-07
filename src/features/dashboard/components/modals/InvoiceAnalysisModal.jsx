@@ -28,12 +28,10 @@ const InvoiceAnalysisModal = ({ isOpen, onClose, onSubmit }) => {  const [formDa
     'image/jpeg': '.jpg, .jpeg',
     'image/jpg': '.jpg',
     'application/pdf': '.pdf'
-  };
-  // Efecto para mostrar el modal
+  };  // Efecto para mostrar el modal y mantener scroll habilitado
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => setIsVisible(true), 50);
-      // Eliminar toast de bienvenida innecesario
     } else {
       setIsVisible(false);
     }
@@ -183,17 +181,16 @@ const InvoiceAnalysisModal = ({ isOpen, onClose, onSubmit }) => {  const [formDa
     }
   };
 
-  if (!isOpen) return null;
-  return (
+  if (!isOpen) return null;  return (
     <div 
       className={`
-        fixed inset-0 z-50 flex items-center justify-center p-4
+        fixed inset-0 z-50 flex items-center justify-center
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        overflow-hidden
+        bg-black/50 backdrop-blur-sm
+        p-4
       `}
       onClick={handleOverlayClick}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Modal */}
       <div 

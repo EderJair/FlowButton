@@ -23,48 +23,17 @@ const AgenteMadreModal = ({ isOpen, onClose, onSubmit }) => {  // Estados
     "¿Qué tareas puedo automatizar hoy?",
     "Optimiza todos los flujos automáticamente",
     "¿Hay algún problema en el sistema?"
-  ];  // Efecto para mostrar el modal, testear conexión y prevenir scroll
+  ];  // Efecto para mostrar el modal, testear conexión y mantener scroll habilitado
   useEffect(() => {
     if (isOpen) {
-      // Prevenir scroll del body
-      document.body.style.overflow = 'hidden';
-      // Mantener la posición actual de scroll
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      
       setTimeout(() => setIsVisible(true), 50);
       // Limpiar historial del chat al abrir el modal
       setChatHistory([]);
       // Testear conexión al abrir el modal
       testConnection();
     } else {
-      // Restaurar scroll del body
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.overflow = '';
-      document.body.style.width = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
       setIsVisible(false);
     }
-    
-    // Cleanup al desmontar el componente
-    return () => {
-      if (isOpen) {
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.overflow = '';
-        document.body.style.width = '';
-        if (scrollY) {
-          window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
-      }
-    };
   }, [isOpen]);
   // Función para testear la conexión al servidor
   const testConnection = async () => {
@@ -220,17 +189,16 @@ const AgenteMadreModal = ({ isOpen, onClose, onSubmit }) => {  // Estados
     }
   };
 
-  if (!isOpen) return null;
-  return (
+  if (!isOpen) return null;  return (
     <div 
       className={`
-        fixed inset-0 z-50 flex items-center justify-center p-4
+        fixed inset-0 z-[9999] flex items-center justify-center
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        overflow-hidden
+        bg-black/50 backdrop-blur-sm
+        p-4
       `}
       onClick={handleOverlayClick}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Modal */}
       <div 
@@ -239,8 +207,8 @@ const AgenteMadreModal = ({ isOpen, onClose, onSubmit }) => {  // Estados
           backdrop-blur-md border border-white/20 
           rounded-2xl shadow-2xl overflow-hidden
           transition-all duration-500 ease-out transform flex flex-col
-          ${isVisible ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}
-          ${isExpanded 
+          ${isVisible ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'}
+          ${isExpanded
             ? 'w-[95vw] h-[95vh] max-w-none max-h-none' 
             : 'w-full max-w-6xl h-[85vh]'
           }

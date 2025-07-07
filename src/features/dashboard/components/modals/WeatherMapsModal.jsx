@@ -221,17 +221,9 @@ const WeatherMapsModal = ({ isOpen, onClose, onSubmit }) => {
     "¿Cómo estará el clima para el fin de semana?",
     "¿Qué ropa me recomiendas usar hoy?",
     "¿Habrá lluvia en los próximos días?"
-  ];  // Efecto para mostrar el modal y prevenir scroll
+  ];  // Efecto para mostrar el modal y mantener scroll habilitado
   useEffect(() => {
     if (isOpen) {
-      // Prevenir scroll del body
-      document.body.style.overflow = 'hidden';
-      // Mantener la posición actual de scroll
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      
       setTimeout(() => setIsVisible(true), 50);
       // Limpiar caché expirado al abrir el modal
       clearExpiredCache();
@@ -240,31 +232,8 @@ const WeatherMapsModal = ({ isOpen, onClose, onSubmit }) => {
         loadWeatherData();
       }
     } else {
-      // Restaurar scroll del body
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.overflow = '';
-      document.body.style.width = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
       setIsVisible(false);
     }
-    
-    // Cleanup al desmontar el componente
-    return () => {
-      if (isOpen) {
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.overflow = '';
-        document.body.style.width = '';
-        if (scrollY) {
-          window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
-      }
-    };
   }, [isOpen]);
   // Efecto para scroll automático del chat
   useEffect(() => {
@@ -379,30 +348,29 @@ const WeatherMapsModal = ({ isOpen, onClose, onSubmit }) => {
     }
   };
 
-  if (!isOpen) return null;
-  return (
+  if (!isOpen) return null;  return (
     <div 
       className={`
-        fixed inset-0 z-50 flex items-center justify-center p-4
+        fixed inset-0 z-[9999] flex items-center justify-center
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        overflow-hidden
+        bg-black/50 backdrop-blur-sm
+        p-4
       `}
       onClick={handleOverlayClick}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Modal */}
       <div 
         className={`
           relative bg-gradient-to-br from-blue-900/95 to-cyan-800/95 
           backdrop-blur-md border border-white/20 
-          rounded-2xl shadow-2xl overflow-hidden
-          transition-all duration-500 ease-out transform flex flex-col
-          ${isVisible ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}
+          rounded-2xl shadow-2xl overflow-hidden          transition-all duration-500 ease-out transform flex flex-col
+          ${isVisible ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'}
           ${isExpanded 
             ? 'w-[95vw] h-[95vh] max-w-none max-h-none' 
             : 'w-full max-w-6xl h-[85vh]'
           }
+          mx-auto my-auto
         `}
       >
         {/* Header */}

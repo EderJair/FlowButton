@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { FlowCard } from '../components/cards';
-import { AgenteMadreModal, GmailOpenAIModal, InvoiceAnalysisModal, ExchangeStockModal, LegalConsultantModal, WeatherMapsModal } from '../components/modals';
+import { AgenteMadreModal, GmailOpenAIModal, GoogleCalendarModal, PdfUploaderModal, InvoiceAnalysisModal, ExchangeStockModal, LegalConsultantModal, WeatherMapsModal, AccountingAdminModal, SupplierContactModal, GeneradorPropuestasModal } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
 const Workflows = () => {
@@ -54,6 +54,24 @@ const Workflows = () => {
           isOpen: true,
           flowType: 'gmail-openai'
         });
+      } else if (flow.id === 'google-calendar') {
+        // Abrir modal para Google Calendar + IA
+        setModalState({
+          isOpen: true,
+          flowType: 'google-calendar'
+        });
+      } else if (flow.id === 'generador-propuestas') {
+        // Abrir modal para Generador de Propuestas
+        setModalState({
+          isOpen: true,
+          flowType: 'generador-propuestas'
+        });
+      } else if (flow.id === 'pdf-uploader') {
+        // Abrir modal para Subir Archivo PDF
+        setModalState({
+          isOpen: true,
+          flowType: 'pdf-uploader'
+        });
       } else if (flow.id === 'invoice-reader') {
         // Abrir modal para Lector de Facturas
         setModalState({
@@ -70,12 +88,22 @@ const Workflows = () => {
         setModalState({
           isOpen: true,
           flowType: 'legal-consultant'
-        });
-      } else if (flow.id === 'weather-maps') {
+        });      } else if (flow.id === 'weather-maps') {
         // Abrir modal para Meteorología + Google Maps
         setModalState({
           isOpen: true,
           flowType: 'weather-maps'
+        });      } else if (flow.id === 'accounting-admin') {
+        // Abrir modal para Administración Contable
+        setModalState({
+          isOpen: true,
+          flowType: 'accounting-admin'
+        });
+      } else if (flow.id === 'supplier-contact') {
+        // Abrir modal para Contacto Proveedores
+        setModalState({
+          isOpen: true,
+          flowType: 'supplier-contact'
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
@@ -228,6 +256,32 @@ const Workflows = () => {
         onSubmit={handleModalSubmit}
       />
 
+      {/* Modal Google Calendar + IA */}
+      <GoogleCalendarModal
+        isOpen={modalState.isOpen && modalState.flowType === 'google-calendar'}
+        onClose={handleModalClose}
+        onSubmit={(formData, result) => {
+          console.log('Datos de Google Calendar:', formData, result);
+          // Aquí procesarías los datos de la cita creada
+        }}
+      />
+
+      {/* Modal Generador de Propuestas */}
+      <GeneradorPropuestasModal
+        isOpen={modalState.isOpen && modalState.flowType === 'generador-propuestas'}
+        onClose={handleModalClose}
+        onSubmit={(formData, result) => {
+          console.log('Datos del Generador de Propuestas:', formData, result);
+          // Aquí procesarías los datos de la propuesta generada
+        }}
+      />
+
+      {/* Modal Subir Archivo PDF */}
+      <PdfUploaderModal
+        isOpen={modalState.isOpen && modalState.flowType === 'pdf-uploader'}
+        onClose={handleModalClose}
+      />
+
       {/* Modal Lector de Facturas */}
       <InvoiceAnalysisModal
         isOpen={modalState.isOpen && modalState.flowType === 'invoice-reader'}
@@ -252,15 +306,31 @@ const Workflows = () => {
           console.log('Datos de consulta legal:', chatData);
           // Aquí procesarías los datos de la consulta legal
         }}
-      />
-
-      {/* Modal Meteorología + Google Maps */}
+      />      {/* Modal Meteorología + Google Maps */}
       <WeatherMapsModal
         isOpen={modalState.isOpen && modalState.flowType === 'weather-maps'}
         onClose={handleModalClose}
         onSubmit={(weatherData) => {
           console.log('Datos meteorológicos:', weatherData);
           // Aquí procesarías los datos meteorológicos
+        }}
+      />      {/* Modal Administración Contable */}
+      <AccountingAdminModal
+        isOpen={modalState.isOpen && modalState.flowType === 'accounting-admin'}
+        onClose={handleModalClose}
+        onSubmit={(accountingData) => {
+          console.log('Datos contables:', accountingData);
+          // Aquí procesarías los datos contables
+        }}
+      />
+
+      {/* Modal Contacto Proveedores */}
+      <SupplierContactModal
+        isOpen={modalState.isOpen && modalState.flowType === 'supplier-contact'}
+        onClose={handleModalClose}
+        onSubmit={(supplierData) => {
+          console.log('Datos de proveedores:', supplierData);
+          // Aquí procesarías los datos de proveedores
         }}
       />
     </div>

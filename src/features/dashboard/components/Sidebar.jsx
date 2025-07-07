@@ -1,14 +1,12 @@
 // src/features/dashboard/components/Sidebar.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   WorkflowIcon,
-  GrowthIcon,
-  NotificationBellIcon
+  GrowthIcon
 } from '../../../assets/icons';
 
 const Sidebar = ({ isOpen, onClose, isLoaded = true, onBackToHome }) => {
-  const [showNotifications, setShowNotifications] = useState(false);
 
   const mainMenuItems = [
     {
@@ -24,17 +22,12 @@ const Sidebar = ({ isOpen, onClose, isLoaded = true, onBackToHome }) => {
       description: 'Métricas y análisis'
     }
   ];
-
   const handleLogout = () => {
     if (window.confirm('¿Estás seguro de que quieres cerrar sesión?')) {
       // Aquí puedes agregar la lógica de logout
       console.log('Cerrando sesión...');
       // Por ejemplo: redirect to login page
     }
-  };
-
-  const handleNotifications = () => {
-    setShowNotifications(!showNotifications);
   };
 
   return (
@@ -96,35 +89,23 @@ const Sidebar = ({ isOpen, onClose, isLoaded = true, onBackToHome }) => {
             {/* Separator */}
             <div className="mx-4 my-6 border-t border-white/10"></div>
 
-            {/* Secondary Actions */}
-            <div className="px-4 space-y-2">
+            {/* Secondary Actions */}            <div className="px-4 space-y-2">
               <h3 className="px-3 text-xs font-semibold text-white/60 uppercase tracking-wider mb-4">
                 ACCIONES
               </h3>
               
-              {/* Notificaciones */}
-              <button
-                onClick={handleNotifications}
-                className={`w-full flex items-center px-4 py-3 text-left text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 ease-out delay-75 transform ${
-                  isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                }`}
-              >
-                <NotificationBellIcon className="w-5 h-5 mr-3" />
-                <div className="flex-1">
-                  <div className="font-medium">NOTIFICACIONES</div>
-                  <div className="text-xs text-white/70 mt-0.5">
-                    {showNotifications ? 'Ocultar alertas' : 'Ver alertas'}
-                  </div>
-                </div>
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-              </button>
-
               {/* Mi Cuenta */}
-              <button
-                onClick={() => console.log('Abriendo configuración de cuenta...')}
-                className={`w-full flex items-center px-4 py-3 text-left text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 ease-out delay-100 transform ${
-                  isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                }`}
+              <NavLink
+                to="/dashboard/account"
+                className={({ isActive }) =>
+                  `w-full flex items-center px-4 py-3 text-left rounded-lg transition-all duration-300 ease-out delay-75 transform ${
+                    isActive
+                      ? 'bg-blue-500/20 text-white border border-blue-500/30'
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                  } ${
+                    isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                  }`
+                }
               >
                 <div className="w-5 h-5 mr-3 bg-gray-500 rounded-full flex items-center justify-center">
                   <span className="text-xs font-bold text-white">U</span>
@@ -135,13 +116,13 @@ const Sidebar = ({ isOpen, onClose, isLoaded = true, onBackToHome }) => {
                     Configuración
                   </div>
                 </div>
-              </button>
+              </NavLink>
 
               {/* Volver al Home */}
               {onBackToHome && (
                 <button
                   onClick={onBackToHome}
-                  className={`w-full flex items-center px-4 py-3 text-left text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 ease-out delay-125 transform ${
+                  className={`w-full flex items-center px-4 py-3 text-left text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 ease-out delay-100 transform ${
                     isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                   }`}
                 >

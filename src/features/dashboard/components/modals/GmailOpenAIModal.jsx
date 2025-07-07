@@ -17,18 +17,11 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
     success,
     generateAndSendEmail,
     clearStates
-  } = useGmailFlow();  // Efecto para mostrar el modal y prevenir scroll
+  } = useGmailFlow();  // Efecto para mostrar el modal y mantener scroll habilitado
   useEffect(() => {
     if (isOpen) {
-      // Prevenir scroll del body
-      document.body.style.overflow = 'hidden';
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      
       setTimeout(() => setIsVisible(true), 50);
-      
+
       // Toast de bienvenida al abrir el modal
       toast.info('¡Generador de emails con IA!', {
         description: 'Completa los campos y la IA creará un email personalizado',
@@ -36,30 +29,8 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
         duration: 3000
       });
     } else {
-      // Restaurar scroll del body
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.overflow = '';
-      document.body.style.width = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
       setIsVisible(false);
     }
-    
-    return () => {
-      if (isOpen) {
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.overflow = '';
-        document.body.style.width = '';
-        if (scrollY) {
-          window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
-      }
-    };
   }, [isOpen]);
   // Limpiar formulario al cerrar
   useEffect(() => {
@@ -75,9 +46,11 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
       ...prev,
       [name]: value
     }));
-  };  const handleSubmit = async (e) => {
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.destinatario || !formData.prompt) {
       toast.warning('Campos incompletos', {
         description: 'Por favor completa todos los campos antes de enviar.',
@@ -98,27 +71,27 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
 
     try {
       const result = await generateAndSendEmail(formData);
-      
+
       // Si hay un callback onSubmit, ejecutarlo
       if (onSubmit) {
         onSubmit(formData, result);
       }
-      
+
       // Mostrar toast de éxito con información rica
       toast.success('¡Email enviado exitosamente!', {
         description: `Tu email ha sido generado con IA y enviado a ${formData.destinatario}`,
         icon: '🚀',
         duration: 3000,
       });
-      
+
       // Cerrar modal después de un breve delay
       setTimeout(() => {
         onClose();
       }, 1000);
-      
+
     } catch (error) {
       console.error('Error al enviar email:', error);
-      
+
       toast.error('Error al enviar email', {
         description: error.message || 'Ocurrió un error inesperado al procesar tu solicitud.',
         icon: '❌',
@@ -133,20 +106,19 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
     }
   };
 
-  if (!isOpen) return null;
-  return (
-    <div 
+  if (!isOpen) return null; return (
+    <div
       className={`
-        fixed inset-0 z-50 flex items-center justify-center p-4
+        fixed inset-0 z-50 flex items-center justify-center
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        overflow-hidden
+        bg-black/50 backdrop-blur-sm
+        p-4
       `}
       onClick={handleOverlayClick}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Modal */}
-      <div 
+      <div
         className={`
           relative bg-gradient-to-br from-gray-900/95 to-gray-800/95 
           backdrop-blur-md border border-white/20 
@@ -172,7 +144,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
                 <p className="text-sm text-gray-400">Emails inteligentes con IA</p>
               </div>
             </div>
-            
+
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10"
@@ -180,7 +152,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
               ✕
             </button>
           </div>
-          
+
           {/* Badge "Impulsado por IA" */}
           <div className="flex justify-center">
             <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full px-4 py-2">
@@ -260,7 +232,7 @@ const GmailOpenAIModal = ({ isOpen, onClose, onSubmit }) => {
             >
               Cancelar
             </button>
-            
+
             <button
               type="submit"
               disabled={isLoading || !formData.destinatario || !formData.prompt}

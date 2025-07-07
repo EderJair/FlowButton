@@ -53,8 +53,7 @@ const ExchangeStockModal = ({ isOpen, onClose, onSubmit }) => {
   // Debounce para auto-conversión
   const debouncedAmount = useDebounce(converterForm.amount, 1000);
   const debouncedFromCurrency = useDebounce(converterForm.fromCurrency, 500);
-  const debouncedToCurrency = useDebounce(converterForm.toCurrency, 500);
-  // Efecto para mostrar el modal - SOLO depende de isOpen
+  const debouncedToCurrency = useDebounce(converterForm.toCurrency, 500);  // Efecto para mostrar el modal y mantener scroll - SOLO depende de isOpen
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => setIsVisible(true), 50);
@@ -66,7 +65,7 @@ const ExchangeStockModal = ({ isOpen, onClose, onSubmit }) => {
       setIsVisible(false);
       stopAutoRefresh();
     }
-  }, [isOpen]); // SOLO isOpen como dependencia  // Limpiar al cerrar
+  }, [isOpen]); // SOLO isOpen como dependencia// Limpiar al cerrar
   useEffect(() => {
     if (!isOpen) {
       setConverterForm({ amount: '', fromCurrency: 'USD', toCurrency: 'PEN' });
@@ -135,17 +134,16 @@ const ExchangeStockModal = ({ isOpen, onClose, onSubmit }) => {
       onClose();
     }
   };
-  if (!isOpen) return null;
-  return (
+  if (!isOpen) return null;  return (
     <div 
       className={`
-        fixed inset-0 z-50 flex items-center justify-center p-4
+        fixed inset-0 z-50 flex items-center justify-center
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        overflow-hidden
+        bg-black/50 backdrop-blur-sm
+        p-4
       `}
       onClick={handleOverlayClick}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Modal */}
       <div 

@@ -23,27 +23,11 @@ const LegalConsultantModal = ({ isOpen, onClose, onSubmit }) => {
   // Scroll automático al final
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);  // Efecto para mostrar el modal y prevenir scroll
+  }, [messages]);  // Efecto para mostrar el modal y mantener scroll habilitado
   useEffect(() => {
     if (isOpen) {
-      // Prevenir scroll del body
-      document.body.style.overflow = 'hidden';
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      
       setTimeout(() => setIsVisible(true), 50);
     } else {
-      // Restaurar scroll del body
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.overflow = '';
-      document.body.style.width = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
       setIsVisible(false);
       // 💾 NO limpiar mensajes al cerrar - mantener para restauración
       // Solo limpiar el input
@@ -51,19 +35,6 @@ const LegalConsultantModal = ({ isOpen, onClose, onSubmit }) => {
         setInputMessage('');
       }, 300);
     }
-    
-    return () => {
-      if (isOpen) {
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.overflow = '';
-        document.body.style.width = '';
-        if (scrollY) {
-          window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
-      }
-    };
   }, [isOpen]);
 
   // 🔍 Función para alternar modo expandido
@@ -513,17 +484,16 @@ const LegalConsultantModal = ({ isOpen, onClose, onSubmit }) => {
     }
   };
 
-  if (!isOpen) return null;
-  return (
+  if (!isOpen) return null;  return (
     <div 
       className={`
-        fixed inset-0 z-50 flex items-center justify-center p-4
+        fixed inset-0 z-50 flex items-center justify-center
         transition-all duration-300 ease-out
         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        overflow-hidden
+        bg-black/50 backdrop-blur-sm
+        p-4
       `}
       onClick={handleOverlayClick}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Modal */}
       <div 

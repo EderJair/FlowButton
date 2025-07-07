@@ -10,8 +10,9 @@ import {
   DashboardIcon,
   DocumentCheckIcon,
   WeatherIcon,
-  MapIcon
-} from '../../../assets/icons';
+  MapIcon,
+  Document
+} from '@/assets/icons';
 
 export const DASHBOARD_FLOWS = [
   {
@@ -52,6 +53,54 @@ export const DASHBOARD_FLOWS = [
     lastUsed: '2024-12-20T10:30:00Z',
     tags: ['email', 'ai', 'automation', 'gmail'],
     apiEndpoints: ['Gmail API', 'OpenAI GPT-4']
+  },
+  {
+    id: 'google-calendar',
+    title: 'Google Calendar + IA',
+    status: 'Activo',
+    description: 'Agenda citas con inteligencia artificial',
+    automationCount: 2,
+    iconCombo: [WorkflowIcon, OpenAI],
+    category: 'productivity',
+    priority: 'high',
+    avgExecutionTime: 650,
+    monthlyExecutions: 189,
+    successRate: 98.1,
+    lastUsed: new Date().toISOString(),
+    tags: ['calendar', 'ai', 'scheduling', 'appointments', 'productivity'],
+    apiEndpoints: ['OpenAI GPT-4', 'Google Calendar API']
+  },
+  {
+    id: 'generador-propuestas',
+    title: 'Generador de Propuestas',
+    status: 'Activo',
+    description: 'Crea propuestas comerciales con IA',
+    automationCount: 2,
+    iconCombo: [DocumentCheckIcon, OpenAI],
+    category: 'business',
+    priority: 'high',
+    avgExecutionTime: 750,
+    monthlyExecutions: 156,
+    successRate: 97.5,
+    lastUsed: new Date().toISOString(),
+    tags: ['proposals', 'business', 'ai', 'commercial', 'documents'],
+    apiEndpoints: ['OpenAI GPT-4', 'Document Generator']
+  },
+  {
+    id: 'pdf-uploader',
+    title: 'Subir Archivo PDF',
+    status: 'Activo',
+    description: 'Carga y gestión de documentos PDF',
+    automationCount: 1,
+    iconCombo: [DocumentCheckIcon, WorkflowIcon],
+    category: 'documents',
+    priority: 'medium',
+    avgExecutionTime: 320,
+    monthlyExecutions: 180,
+    successRate: 99.2,
+    lastUsed: new Date().toISOString(),
+    tags: ['pdf', 'upload', 'documents', 'storage'],
+    apiEndpoints: ['File Storage API', 'PDF Parser']
   },
   {
     id: 'legal-consultant',
@@ -164,20 +213,19 @@ export const DASHBOARD_FLOWS = [
     lastUsed: null,
     tags: ['email', 'formal', 'writing', 'professional'],
     apiEndpoints: ['Gmail API', 'OpenAI GPT-4']
-  },
-  {
+  }, {
     id: 'accounting-admin',
     title: 'Administración Contable',
-    status: 'Próximamente',
+    status: 'Activo',
     description: 'Gestión contable automatizada',
     automationCount: 3,
     iconCombo: [DocumentCheckIcon, DashboardIcon],
     category: 'accounting',
     priority: 'high',
-    avgExecutionTime: 0,
-    monthlyExecutions: 0,
-    successRate: 0,
-    lastUsed: null,
+    avgExecutionTime: 240,
+    monthlyExecutions: 156,
+    successRate: 97.8,
+    lastUsed: new Date().toISOString(),
     tags: ['accounting', 'finance', 'administration', 'automation'],
     apiEndpoints: ['Accounting API', 'Tax Calculator', 'Bank Connector']
   },
@@ -196,11 +244,10 @@ export const DASHBOARD_FLOWS = [
     lastUsed: null,
     tags: ['sales', 'leads', 'generation', 'marketing'],
     apiEndpoints: ['CRM API', 'Lead Tracker', 'Email Automation']
-  },
-  {
+  }, {
     id: 'supplier-contact',
     title: 'Contacto Proveedores',
-    status: 'Próximamente',
+    status: 'Activo',
     description: 'Gestión de relaciones con proveedores',
     automationCount: 3,
     iconCombo: [NotificationBellIcon, DashboardIcon],
@@ -258,7 +305,7 @@ export const getFlowStatistics = () => {
   const totalExecutions = activeFlows.reduce((sum, flow) => sum + flow.monthlyExecutions, 0);
   const avgSuccessRate = activeFlows.reduce((sum, flow) => sum + flow.successRate, 0) / activeFlows.length;
   const avgExecutionTime = activeFlows.reduce((sum, flow) => sum + flow.avgExecutionTime, 0) / activeFlows.length;
-  
+
   return {
     totalFlows: DASHBOARD_FLOWS.length,
     activeFlows: activeFlows.length,
@@ -289,15 +336,15 @@ export const getTopFlowsBySuccessRate = (limit = 5) => {
 // Función para obtener categorías con estadísticas
 export const getCategoryStatistics = () => {
   const categories = [...new Set(DASHBOARD_FLOWS.map(flow => flow.category))];
-  
+
   return categories.map(category => {
     const categoryFlows = getFlowsByCategory(category);
     const activeFlows = categoryFlows.filter(flow => flow.status === 'Activo');
     const totalExecutions = activeFlows.reduce((sum, flow) => sum + flow.monthlyExecutions, 0);
-    const avgSuccessRate = activeFlows.length > 0 
-      ? activeFlows.reduce((sum, flow) => sum + flow.successRate, 0) / activeFlows.length 
+    const avgSuccessRate = activeFlows.length > 0
+      ? activeFlows.reduce((sum, flow) => sum + flow.successRate, 0) / activeFlows.length
       : 0;
-    
+
     return {
       category,
       totalFlows: categoryFlows.length,
@@ -311,7 +358,7 @@ export const getCategoryStatistics = () => {
 // Función para obtener APIs más utilizadas
 export const getAPIUsageStatistics = () => {
   const apiUsage = {};
-  
+
   getActiveFlows().forEach(flow => {
     flow.apiEndpoints.forEach(api => {
       if (apiUsage[api]) {
@@ -326,7 +373,7 @@ export const getAPIUsageStatistics = () => {
       }
     });
   });
-  
+
   return Object.values(apiUsage).sort((a, b) => b.usage - a.usage);
 };
 
@@ -334,11 +381,11 @@ export const getAPIUsageStatistics = () => {
 export const generateDailyActivityData = (days = 30) => {
   const data = [];
   const today = new Date();
-  
+
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
-    
+
     // Simular actividad diaria basada en flujos activos
     const activeFlows = getActiveFlows();
     const dailyExecutions = activeFlows.reduce((sum, flow) => {
@@ -347,10 +394,10 @@ export const generateDailyActivityData = (days = 30) => {
       const variation = dailyAvg * 0.5; // 50% de variación
       return sum + Math.max(0, Math.floor(dailyAvg + (Math.random() - 0.5) * variation));
     }, 0);
-    
+
     const successRate = 85 + Math.random() * 15; // Entre 85-100%
     const failures = Math.floor(dailyExecutions * (100 - successRate) / 100);
-    
+
     data.push({
       date: date.toISOString().split('T')[0],
       executions: dailyExecutions,
@@ -359,6 +406,6 @@ export const generateDailyActivityData = (days = 30) => {
       successRate: Math.round(successRate * 10) / 10
     });
   }
-  
+
   return data;
 };

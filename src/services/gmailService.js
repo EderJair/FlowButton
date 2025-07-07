@@ -1,5 +1,4 @@
 // src/services/gmailService.js
-
 import { api } from './api.js';
 
 // Servicio para el flujo Gmail + OpenAI - Adaptado para tu backend N8N
@@ -8,7 +7,7 @@ export const gmailService = {
   generateAndSendEmail: async (emailData) => {
     try {
       console.log('📧 Enviando email con datos del modal:', emailData);
-      
+
       // Transformar los datos del modal a lo que espera tu backend
       const backendData = {
         subject: 'Email generado con IA', // Puedes hacer esto configurable
@@ -16,11 +15,11 @@ export const gmailService = {
         recipients: emailData.destinatario, // destinatario se mapea a recipients
         timestamp: new Date().toISOString()
       };
-      
+
       console.log('📤 Datos transformados para tu backend:', backendData);
-      
+
       const response = await api.post('/send-email', backendData);
-      
+
       console.log('✅ Respuesta del backend:', response);
       return response;
     } catch (error) {
@@ -50,7 +49,7 @@ export const gmailService = {
         recipients: emailData.recipients || emailData.destinatario,
         timestamp: new Date().toISOString()
       };
-      
+
       console.log('📤 Enviando email personalizado:', backendData);
       const response = await api.post('/send-email', backendData);
       return response;

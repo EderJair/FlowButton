@@ -12,3 +12,4 @@ export { default as GitHubIcon } from './GitHubIcon';
 export { default as XIcon } from './XIcon';
 export { default as WeatherIcon } from './WeatherIcon';
 export { default as MapIcon } from './MapIcon';
+export { default as Document } from './Document';

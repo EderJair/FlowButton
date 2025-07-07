@@ -5,7 +5,8 @@ import { HomePage } from './pages'
 import { 
   DashboardLayout, 
   Workflows,
-  Analytics
+  Analytics,
+  Account
 } from './features'
 import './assets/styles/App.css'
 
@@ -19,12 +20,13 @@ function App() {
             <Navbar />
             <HomePage />
           </>
-        } />
-          {/* Dashboard routes */}
+        } />        {/* Dashboard routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/dashboard/workflows" replace />} />
           <Route path="workflows" element={<Workflows />} />
-          <Route path="analytics" element={<Analytics />} />        </Route>
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="account" element={<Account />} />
+        </Route>
       </Routes>
       
       {/* Sonner Toaster para notificaciones globales */}

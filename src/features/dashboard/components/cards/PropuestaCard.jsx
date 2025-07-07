@@ -1,20 +1,21 @@
-// src/features/dashboard/components/cards/FlowCard.jsx
+// src/features/dashboard/components/cards/PropuestaCard.jsx
+import { Document, OpenAI } from '@/assets/icons';
 
-import React from 'react';
-
-const FlowCard = ({
-  title,
-  status = 'Próximamente', // 'Activo' o 'Próximamente'
-  description,
-  automationCount = 3,
-  iconCombo, // Array de iconos para mostrar la combinación
+const PropuestaCard = ({
   onClick,
   className = '',
   // Props para animación
   isVisible = true,
   animationDelay = 0
 }) => {
+  const title = "Generador de Propuestas";
+  const description = "Crea propuestas comerciales profesionales con IA";
+  const status = "Activo"; // Asumimos que está activo desde el inicio
+  const automationCount = 2; // Número de automatizaciones disponibles
   const isActive = status === 'Activo';
+  
+  // Iconos para mostrar la combinación (Documento + IA)
+  const iconCombo = [Document, OpenAI];
 
   return (
     <div 
@@ -102,4 +103,4 @@ const FlowCard = ({
   );
 };
 
-export default FlowCard;
+export default PropuestaCard;
