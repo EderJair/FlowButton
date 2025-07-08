@@ -11,6 +11,8 @@ import {
   DocumentCheckIcon,
   WeatherIcon,
   MapIcon,
+  GoogleCalendarIcon,
+  GoogleMeetIcon,
   Document
 } from '@/assets/icons';
 
@@ -69,6 +71,22 @@ export const DASHBOARD_FLOWS = [
     lastUsed: new Date().toISOString(),
     tags: ['calendar', 'ai', 'scheduling', 'appointments', 'productivity'],
     apiEndpoints: ['OpenAI GPT-4', 'Google Calendar API']
+  },
+  {
+    id: 'google-meet-calendar',
+    title: 'Google Meet + Calendar + IA',
+    status: 'Activo',
+    description: 'Reuniones automáticas con enlace de Google Meet',
+    automationCount: 3,
+    iconCombo: [GoogleMeetIcon, GoogleCalendarIcon, OpenAI],
+    category: 'productivity',
+    priority: 'high',
+    avgExecutionTime: 720,
+    monthlyExecutions: 165,
+    successRate: 98.7,
+    lastUsed: new Date().toISOString(),
+    tags: ['meet', 'calendar', 'ai', 'video-calls', 'automation', 'n8n'],
+    apiEndpoints: ['N8N Webhook', 'Google Calendar API', 'Google Meet API', 'OpenAI GPT-4']
   },
   {
     id: 'generador-propuestas',

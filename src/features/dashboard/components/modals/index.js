@@ -3,6 +3,7 @@
 export { default as AgenteMadreModal } from './AgenteMadreModal.jsx';
 export { default as GmailOpenAIModal } from './GmailOpenAIModal.jsx';
 export { default as GoogleCalendarModal } from './GoogleCalendarModal.jsx';
+export { default as GoogleMeetCalendarModal } from './GoogleMeetCalendarModal.jsx';
 export { default as PdfUploaderModal } from './PdfUploaderModal.jsx';
 export { default as InvoiceAnalysisModal } from './InvoiceAnalysisModal.jsx';
 export { default as ExchangeStockModal } from './ExchangeStockModal.jsx';

@@ -7,6 +7,8 @@ export { default as GrowthIcon } from './GrowthIcon';
 export { default as NotificationBellIcon } from './NotificationBellIcon';
 export { default as DashboardIcon } from './DashboardIcon';
 export { default as DocumentCheckIcon } from './DocumentCheckIcon';
+export { default as GoogleMeetIcon } from './GoogleMeetIcon';
+export { default as GoogleCalendarIcon } from './GoogleCalendarIcon';
 export { default as FlowConnectIcon } from './FlowConnectIcon';
 export { default as GitHubIcon } from './GitHubIcon';
 export { default as XIcon } from './XIcon';
