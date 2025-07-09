@@ -10,5 +10,6 @@ export { default as ExchangeStockModal } from './ExchangeStockModal.jsx';
 export { default as LegalConsultantModal } from './LegalConsultantModal.jsx';
 export { default as WeatherMapsModal } from './WeatherMapsModal.jsx';
 export { default as AccountingAdminModal } from './AccountingAdminModal.jsx';
+export { default as CVAnalizadorModal} from './CVAnalizadorModal.jsx';
 export { default as SupplierContactModal } from './SupplierContactModal.jsx';
 export { default as GeneradorPropuestasModal } from './GeneradorPropuestasModal.jsx';

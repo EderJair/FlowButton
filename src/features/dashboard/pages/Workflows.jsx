@@ -14,7 +14,8 @@ import {
   WeatherMapsModal, 
   AccountingAdminModal, 
   SupplierContactModal, 
-  GeneradorPropuestasModal 
+  GeneradorPropuestasModal,
+  CVAnalizadorModal
 } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
@@ -129,6 +130,12 @@ const Workflows = () => {
         setModalState({
           isOpen: true,
           flowType: 'supplier-contact'
+        });
+      }else if (flow.id === 'cv-analizador') {
+        // Abrir modal para CV Analizador
+        setModalState({
+          isOpen: true,
+          flowType: 'cv-analizador'
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
@@ -307,6 +314,7 @@ const Workflows = () => {
         }}
       />
 
+
       {/* Modal Generador de Propuestas */}
       <GeneradorPropuestasModal
         isOpen={modalState.isOpen && modalState.flowType === 'generador-propuestas'}
@@ -380,6 +388,16 @@ const Workflows = () => {
         onSubmit={(supplierData) => {
           console.log('Datos de proveedores:', supplierData);
           // Aquí procesarías los datos de proveedores
+        }}
+      />
+
+      {/* Modal CV Analizador */}
+      <CVAnalizadorModal
+        isOpen={modalState.isOpen && modalState.flowType === 'cv-analizador'}
+        onClose={handleModalClose}
+        onSubmit={(formData, result) => {
+          console.log('Datos del CV Analizador:', formData, result);
+          // Aquí procesarías los datos del análisis de CV
         }}
       />
     </div>

@@ -89,6 +89,30 @@ export const DASHBOARD_FLOWS = [
     apiEndpoints: ['N8N Webhook', 'Google Calendar API', 'Google Meet API', 'OpenAI GPT-4']
   },
   {
+    id: 'cv-analizador',
+    title: 'Analizador de CV con IA',
+    status: 'Activo',
+    description: 'Análisis técnico inteligente de currículums para reclutamiento',
+    automationCount: 4,
+    iconCombo: [DocumentCheckIcon, OpenAI],
+    category: 'hr',
+    priority: 'high',
+    avgExecutionTime: 2500,
+    monthlyExecutions: 125,
+    successRate: 97.2,
+    lastUsed: new Date().toISOString(),
+    tags: ['cv', 'recruitment', 'ai', 'analysis', 'hr', 'technical', 'evaluation'],
+    apiEndpoints: ['N8N Webhook', 'OpenAI GPT-4', 'PDF Parser', 'CV Analysis Engine'],
+    features: {
+      pdfProcessing: true,
+      technicalEvaluation: true,
+      salaryEstimation: true,
+      skillsAnalysis: true,
+      testRecommendations: true,
+      redFlagDetection: true
+    }
+  },
+  {
     id: 'generador-propuestas',
     title: 'Generador de Propuestas',
     status: 'Activo',
@@ -317,25 +341,32 @@ export const getFlowsByPriority = (priority) => {
   return DASHBOARD_FLOWS.filter(flow => flow.priority === priority);
 };
 
+// Función para obtener el flujo del CV Analyzer
+export const getCVAnalyzerFlow = () => {
+  return DASHBOARD_FLOWS.find(flow => flow.id === 'cv-analizador');
+};
+
+// Función para obtener flujos de HR
+export const getHRFlows = () => getFlowsByCategory('hr');
+
 // Función para obtener estadísticas generales
 export const getFlowStatistics = () => {
   const activeFlows = getActiveFlows();
   const totalExecutions = activeFlows.reduce((sum, flow) => sum + flow.monthlyExecutions, 0);
   const avgSuccessRate = activeFlows.reduce((sum, flow) => sum + flow.successRate, 0) / activeFlows.length;
-  const avgExecutionTime = activeFlows.reduce((sum, flow) => sum + flow.avgExecutionTime, 0) / activeFlows.length;
-
-  return {
-    totalFlows: DASHBOARD_FLOWS.length,
-    activeFlows: activeFlows.length,
-    upcomingFlows: getUpcomingFlows().length,
-    totalExecutions,
-    avgSuccessRate: Math.round(avgSuccessRate * 10) / 10,
-    avgExecutionTime: Math.round(avgExecutionTime),
-    highPriorityFlows: getFlowsByPriority('high').length,
-    mediumPriorityFlows: getFlowsByPriority('medium').length,
-    lowPriorityFlows: getFlowsByPriority('low').length
+  const avgExecutionTime = activeFlows.reduce((sum, flow) => sum + flow.avgExecutionTime, 0) / activeFlows.length;    return {
+      totalFlows: DASHBOARD_FLOWS.length,
+      activeFlows: activeFlows.length,
+      upcomingFlows: getUpcomingFlows().length,
+      totalExecutions,
+      avgSuccessRate: Math.round(avgSuccessRate * 10) / 10,
+      avgExecutionTime: Math.round(avgExecutionTime),
+      highPriorityFlows: getFlowsByPriority('high').length,
+      mediumPriorityFlows: getFlowsByPriority('medium').length,
+      lowPriorityFlows: getFlowsByPriority('low').length,
+      criticalFlows: getFlowsByPriority('critical').length
+    };
   };
-};
 
 // Función para obtener el top de flujos más usados
 export const getTopFlowsByUsage = (limit = 5) => {
@@ -426,4 +457,21 @@ export const generateDailyActivityData = (days = 30) => {
   }
 
   return data;
+};
+
+// Función para obtener estadísticas específicas de CV Analyzer
+export const getCVAnalyzerStats = () => {
+  const cvFlow = getCVAnalyzerFlow();
+  if (!cvFlow) return null;
+
+  return {
+    title: cvFlow.title,
+    monthlyAnalyses: cvFlow.monthlyExecutions,
+    successRate: cvFlow.successRate,
+    avgProcessingTime: cvFlow.avgExecutionTime,
+    features: cvFlow.features,
+    category: cvFlow.category,
+    priority: cvFlow.priority,
+    lastUsed: cvFlow.lastUsed
+  };
 };
