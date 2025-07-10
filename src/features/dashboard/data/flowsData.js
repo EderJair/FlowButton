@@ -89,30 +89,6 @@ export const DASHBOARD_FLOWS = [
     apiEndpoints: ['N8N Webhook', 'Google Calendar API', 'Google Meet API', 'OpenAI GPT-4']
   },
   {
-    id: 'cv-analizador',
-    title: 'Analizador de CV con IA',
-    status: 'Activo',
-    description: 'Análisis técnico inteligente de currículums para reclutamiento',
-    automationCount: 4,
-    iconCombo: [DocumentCheckIcon, OpenAI],
-    category: 'hr',
-    priority: 'high',
-    avgExecutionTime: 2500,
-    monthlyExecutions: 125,
-    successRate: 97.2,
-    lastUsed: new Date().toISOString(),
-    tags: ['cv', 'recruitment', 'ai', 'analysis', 'hr', 'technical', 'evaluation'],
-    apiEndpoints: ['N8N Webhook', 'OpenAI GPT-4', 'PDF Parser', 'CV Analysis Engine'],
-    features: {
-      pdfProcessing: true,
-      technicalEvaluation: true,
-      salaryEstimation: true,
-      skillsAnalysis: true,
-      testRecommendations: true,
-      redFlagDetection: true
-    }
-  },
-  {
     id: 'generador-propuestas',
     title: 'Generador de Propuestas',
     status: 'Activo',
@@ -317,6 +293,78 @@ export const DASHBOARD_FLOWS = [
     lastUsed: null,
     tags: ['campaigns', 'sales', 'marketing', 'automation'],
     apiEndpoints: ['Campaign Manager', 'Analytics API', 'Email Service']
+  },
+  {
+    id: 'agente-seguros-modal',
+    title: 'Agente Seguros Modal',
+    status: 'Activo',
+    description: 'Sistema inteligente de seguros con interfaz modal',
+    automationCount: 4,
+    iconCombo: [OpenAI, DocumentCheckIcon],
+    category: 'insurance',
+    priority: 'high',
+    avgExecutionTime: 680,
+    monthlyExecutions: 190,
+    successRate: 97.3,
+    lastUsed: '2025-07-10T10:00:00Z',
+    tags: ['insurance', 'modal', 'ai', 'quotes', 'policies'],
+    apiEndpoints: ['OpenAI GPT-4', 'Insurance API', 'Quote Generator', 'Policy Manager']
+  },
+  {
+    id: 'agente-marketing-modal',
+    title: 'Agente Marketing Modal',
+    status: 'Activo',
+    description: 'Sistema inteligente de marketing con interfaz modal',
+    automationCount: 4,
+    iconCombo: [OpenAI, GrowthIcon],
+    category: 'marketing',
+    priority: 'high',
+    avgExecutionTime: 720,
+    monthlyExecutions: 215,
+    successRate: 96.8,
+    lastUsed: '2025-07-10T11:30:00Z',
+    tags: ['marketing', 'modal', 'ai', 'campaigns', 'automation'],
+    apiEndpoints: ['OpenAI GPT-4', 'Marketing API', 'Campaign Manager', 'Analytics API']
+  },
+  {
+    id: 'cv-analizador',
+    title: 'Analizador de CV con IA',
+    status: 'Activo',
+    description: 'Análisis técnico inteligente de currículums para reclutamiento',
+    automationCount: 4,
+    iconCombo: [DocumentCheckIcon, OpenAI],
+    category: 'hr',
+    priority: 'high',
+    avgExecutionTime: 2500,
+    monthlyExecutions: 125,
+    successRate: 97.2,
+    lastUsed: new Date().toISOString(),
+    tags: ['cv', 'recruitment', 'ai', 'analysis', 'hr', 'technical', 'evaluation'],
+    apiEndpoints: ['N8N Webhook', 'OpenAI GPT-4', 'PDF Parser', 'CV Analysis Engine'],
+    features: {
+      pdfProcessing: true,
+      technicalEvaluation: true,
+      salaryEstimation: true,
+      skillsAnalysis: true,
+      testRecommendations: true,
+      redFlagDetection: true
+    }
+  },
+  {
+    id: 'cv-analizador-masivo-modal',
+    title: 'CV Analizador Masivo Modal',
+    status: 'Activo',
+    description: 'Análisis masivo de CVs con inteligencia artificial',
+    automationCount: 3,
+    iconCombo: [OpenAI, DocumentCheckIcon],
+    category: 'recruitment',
+    priority: 'high',
+    avgExecutionTime: 890,
+    monthlyExecutions: 145,
+    successRate: 98.2,
+    lastUsed: '2025-07-10T12:15:00Z',
+    tags: ['cv', 'recruitment', 'ai', 'analysis', 'hiring'],
+    apiEndpoints: ['OpenAI GPT-4', 'Google Drive API', 'N8N Webhook', 'PDF Parser']
   }
 ];
 
@@ -354,19 +402,22 @@ export const getFlowStatistics = () => {
   const activeFlows = getActiveFlows();
   const totalExecutions = activeFlows.reduce((sum, flow) => sum + flow.monthlyExecutions, 0);
   const avgSuccessRate = activeFlows.reduce((sum, flow) => sum + flow.successRate, 0) / activeFlows.length;
-  const avgExecutionTime = activeFlows.reduce((sum, flow) => sum + flow.avgExecutionTime, 0) / activeFlows.length;    return {
-      totalFlows: DASHBOARD_FLOWS.length,
-      activeFlows: activeFlows.length,
-      upcomingFlows: getUpcomingFlows().length,
-      totalExecutions,
-      avgSuccessRate: Math.round(avgSuccessRate * 10) / 10,
-      avgExecutionTime: Math.round(avgExecutionTime),
-      highPriorityFlows: getFlowsByPriority('high').length,
-      mediumPriorityFlows: getFlowsByPriority('medium').length,
-      lowPriorityFlows: getFlowsByPriority('low').length,
-      criticalFlows: getFlowsByPriority('critical').length
-    };
+  const avgExecutionTime = activeFlows.reduce((sum, flow) => sum + flow.avgExecutionTime, 0) / activeFlows.length;
+
+  return {
+    totalFlows: DASHBOARD_FLOWS.length,
+    activeFlows: activeFlows.length,
+    upcomingFlows: getUpcomingFlows().length,
+    totalExecutions,
+    avgSuccessRate: Math.round(avgSuccessRate * 10) / 10,
+    avgExecutionTime: Math.round(avgExecutionTime),
+    highPriorityFlows: getFlowsByPriority('high').length,
+    mediumPriorityFlows: getFlowsByPriority('medium').length,
+    lowPriorityFlows: getFlowsByPriority('low').length,
+    criticalFlows: getFlowsByPriority('critical').length
+
   };
+};
 
 // Función para obtener el top de flujos más usados
 export const getTopFlowsByUsage = (limit = 5) => {
@@ -455,6 +506,8 @@ export const generateDailyActivityData = (days = 30) => {
       successRate: Math.round(successRate * 10) / 10
     });
   }
+
+  
 
   return data;
 };

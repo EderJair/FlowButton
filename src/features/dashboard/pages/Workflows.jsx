@@ -14,8 +14,11 @@ import {
   WeatherMapsModal, 
   AccountingAdminModal, 
   SupplierContactModal, 
-  GeneradorPropuestasModal,
-  CVAnalizadorModal
+  GeneradorPropuestasModal, 
+  AgenteSegurosModal,
+  AgenteMarketingModal,
+  CVAnalizadorModal,
+  CVAnalizadorMasivoModal
 } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
@@ -77,6 +80,30 @@ const Workflows = () => {
           isOpen: true,
           flowType: 'google-calendar'
         });
+      } else if (flow.id === 'agente-seguros-modal') {
+        // Abrir modal para Google Calendar + IA
+        setModalState({
+          isOpen: true,
+          flowType: 'agente-seguros-modal'
+        });
+      } else if (flow.id === 'agente-marketing-modal') {
+        // Abrir modal para Agente Marketing
+        setModalState({
+          isOpen: true,
+          flowType: 'agente-marketing-modal'
+        });
+      } else if (flow.id === 'cv-analizador-masivo-modal') {
+        // Abrir modal para CV Analizador Masivo
+        setModalState({
+          isOpen: true,
+          flowType: 'cv-analizador-masivo-modal'
+        });
+      }else if (flow.id === 'cv-analizador') {
+        // Abrir modal para CV Analizador 
+        setModalState({
+          isOpen: true,
+          flowType: 'cv-analizador'
+        });
       } else if (flow.id === 'google-meet-calendar') {
         // ← Nueva condición para Google Meet Calendar
         setModalState({
@@ -130,12 +157,6 @@ const Workflows = () => {
         setModalState({
           isOpen: true,
           flowType: 'supplier-contact'
-        });
-      }else if (flow.id === 'cv-analizador') {
-        // Abrir modal para CV Analizador
-        setModalState({
-          isOpen: true,
-          flowType: 'cv-analizador'
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
@@ -287,6 +308,46 @@ const Workflows = () => {
         }}
       />
 
+      {/* Modal Agente Seguros */}
+      <AgenteSegurosModal
+        isOpen={modalState.isOpen && modalState.flowType === 'agente-seguros-modal'}
+        onClose={handleModalClose}
+        onSubmit={(masterData) => {
+          console.log('Datos del Agente Seguros:', masterData);
+          // Aquí procesarías los comandos y datos del Agente Madre
+        }}
+      />
+
+      {/* Modal Agente Marketing */}
+      <AgenteMarketingModal
+        isOpen={modalState.isOpen && modalState.flowType === 'agente-marketing-modal'}
+        onClose={handleModalClose}
+        onSubmit={(marketingData) => {
+          console.log('Datos del Agente Marketing:', marketingData);
+          // Aquí procesarías los comandos y datos del Agente Marketing
+        }}
+      />
+
+      {/* Modal CV Analizador Masivo */}
+      <CVAnalizadorMasivoModal
+        isOpen={modalState.isOpen && modalState.flowType === 'cv-analizador-masivo-modal'}
+        onClose={handleModalClose}
+        onSubmit={(cvData) => {
+          console.log('Datos del CV Analizador Masivo:', cvData);
+          // Aquí procesarías los resultados del análisis de CVs
+        }}
+      />
+
+      {/* Modal CV Analizador */}
+      <CVAnalizadorModal
+        isOpen={modalState.isOpen && modalState.flowType === 'cv-analizador'}
+        onClose={handleModalClose}
+        onSubmit={(cvData) => {
+          console.log('Datos del CV Analizador:', cvData);
+          // Aquí procesarías los resultados del análisis de un solo CV
+        }}
+      />
+
       {/* Modal Gmail + OpenAI */}
       <GmailOpenAIModal
         isOpen={modalState.isOpen && modalState.flowType === 'gmail-openai'}
@@ -313,7 +374,6 @@ const Workflows = () => {
           // Aquí procesarías los datos del evento con Google Meet creado
         }}
       />
-
 
       {/* Modal Generador de Propuestas */}
       <GeneradorPropuestasModal
@@ -388,16 +448,6 @@ const Workflows = () => {
         onSubmit={(supplierData) => {
           console.log('Datos de proveedores:', supplierData);
           // Aquí procesarías los datos de proveedores
-        }}
-      />
-
-      {/* Modal CV Analizador */}
-      <CVAnalizadorModal
-        isOpen={modalState.isOpen && modalState.flowType === 'cv-analizador'}
-        onClose={handleModalClose}
-        onSubmit={(formData, result) => {
-          console.log('Datos del CV Analizador:', formData, result);
-          // Aquí procesarías los datos del análisis de CV
         }}
       />
     </div>
