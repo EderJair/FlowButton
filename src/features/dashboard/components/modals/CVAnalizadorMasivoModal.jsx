@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 // src/features/dashboard/components/modals/CVAnalizadorMasivoModal.jsx
 
 import { useState, useEffect } from 'react';

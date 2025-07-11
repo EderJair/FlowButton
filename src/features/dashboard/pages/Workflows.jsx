@@ -18,7 +18,8 @@ import {
   AgenteSegurosModal,
   AgenteMarketingModal,
   CVAnalizadorModal,
-  CVAnalizadorMasivoModal
+  CVAnalizadorMasivoModal,
+  AgenteConsultorContratoModal
 } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
@@ -139,6 +140,12 @@ const Workflows = () => {
         setModalState({
           isOpen: true,
           flowType: 'legal-consultant'
+        });
+      } else if (flow.id === 'agente-consultor-contrato-modal') {
+        // Abrir modal para Agente Consultor Modal
+        setModalState({
+          isOpen: true,
+          flowType: 'agente-consultor-contrato-modal'
         });
       } else if (flow.id === 'weather-maps') {
         // Abrir modal para Meteorología + Google Maps
@@ -418,6 +425,16 @@ const Workflows = () => {
         onSubmit={(chatData) => {
           console.log('Datos de consulta legal:', chatData);
           // Aquí procesarías los datos de la consulta legal
+        }}
+      />
+
+      {/* Modal Agente Consultor */}
+      <AgenteConsultorContratoModal
+        isOpen={modalState.isOpen && modalState.flowType === 'agente-consultor-contrato-modal'}
+        onClose={handleModalClose}
+        onSubmit={(chatData) => {
+          console.log('Datos del Agente Consultor Modal:', chatData);
+          // Aquí procesarías los datos del agente consultor
         }}
       />
 

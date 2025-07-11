@@ -351,6 +351,30 @@ export const DASHBOARD_FLOWS = [
     }
   },
   {
+    id: 'agente-consultor-contrato-modal',
+    title: 'Agente Consultor de Contratos Modal',
+    status: 'Activo',
+    description: 'Sistema inteligente de consultoría legal con interfaz modal',
+    automationCount: 4,
+    iconCombo: [OpenAI, DocumentCheckIcon],
+    category: 'legal',
+    priority: 'high',
+    avgExecutionTime: 1200,
+    monthlyExecutions: 145,
+    successRate: 96.5,
+    lastUsed: new Date().toISOString(),
+    tags: ['legal', 'consultation', 'modal', 'ai', 'documents', 'contracts'],
+    apiEndpoints: ['OpenAI GPT-4', 'N8N Webhook', 'Document Parser', 'Legal Analysis Engine'],
+    features: {
+      contractAnalysis: true,
+      legalConsultation: true,
+      documentProcessing: true,
+      chatInterface: true,
+      fileUpload: true,
+      realTimeAnalysis: true
+    }
+  },
+  {
     id: 'cv-analizador-masivo-modal',
     title: 'CV Analizador Masivo Modal',
     status: 'Activo',
