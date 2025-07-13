@@ -3,7 +3,7 @@
 // ==========================================
 
 const LEGAL_CONSULTANT_CONFIG = {
-  legalSystemUrl: 'https://n8n-jose.up.railway.app/webhook-test/chat'
+  legalSystemUrl: 'https://n8n-jose.up.railway.app/webhook/chat'
 };
 
 export const legalConsultorContratoService = {
