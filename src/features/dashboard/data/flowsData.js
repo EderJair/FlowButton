@@ -389,6 +389,30 @@ export const DASHBOARD_FLOWS = [
     lastUsed: '2025-07-10T12:15:00Z',
     tags: ['cv', 'recruitment', 'ai', 'analysis', 'hiring'],
     apiEndpoints: ['OpenAI GPT-4', 'Google Drive API', 'N8N Webhook', 'PDF Parser']
+  },
+  {
+    id: 'ticket-system',
+    title: 'Sistema de Tickets',
+    status: 'Activo',
+    description: 'Gestión inteligente de tickets de soporte y atención al cliente',
+    automationCount: 4,
+    iconCombo: [NotificationBellIcon, DocumentCheckIcon],
+    category: 'support',
+    priority: 'high',
+    avgExecutionTime: 450,
+    monthlyExecutions: 280,
+    successRate: 98.7,
+    lastUsed: new Date().toISOString(),
+    tags: ['tickets', 'support', 'customer-service', 'automation', 'crm'],
+    apiEndpoints: ['N8N Webhook', 'Ticket API', 'Email Service', 'CRM Integration'],
+    features: {
+      ticketCreation: true,
+      priorityAssignment: true,
+      autoResponse: true,
+      statusTracking: true,
+      emailNotifications: true,
+      categoryClassification: true
+    }
   }
 ];
 

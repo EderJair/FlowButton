@@ -17,3 +17,4 @@ export { default as CVAnalizadorModal} from './CVAnalizadorModal.jsx';
 export { default as AgenteConsultorContratoModal } from './AgenteConsultorContratoModal.jsx';
 export { default as SupplierContactModal } from './SupplierContactModal.jsx';
 export { default as GeneradorPropuestasModal } from './GeneradorPropuestasModal.jsx';
+export { default as TicketModal } from './TicketModal.jsx';

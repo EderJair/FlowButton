@@ -19,7 +19,8 @@ import {
   AgenteMarketingModal,
   CVAnalizadorModal,
   CVAnalizadorMasivoModal,
-  AgenteConsultorContratoModal
+  AgenteConsultorContratoModal,
+  TicketModal
 } from '../components/modals';
 import { DASHBOARD_FLOWS, getActiveFlows, getUpcomingFlows } from '../data/flowsData';
 
@@ -164,6 +165,12 @@ const Workflows = () => {
         setModalState({
           isOpen: true,
           flowType: 'supplier-contact'
+        });
+      } else if (flow.id === 'ticket-system') {
+        // Abrir modal para Sistema de Tickets
+        setModalState({
+          isOpen: true,
+          flowType: 'ticket-system'
         });
       } else {
         console.log('Abriendo flujo:', flow.title);
@@ -465,6 +472,16 @@ const Workflows = () => {
         onSubmit={(supplierData) => {
           console.log('Datos de proveedores:', supplierData);
           // Aquí procesarías los datos de proveedores
+        }}
+      />
+
+      {/* Modal Sistema de Tickets */}
+      <TicketModal
+        isOpen={modalState.isOpen && modalState.flowType === 'ticket-system'}
+        onClose={handleModalClose}
+        onSubmit={(ticketData) => {
+          console.log('Datos del ticket:', ticketData);
+          // Aquí procesarías los datos del ticket creado
         }}
       />
     </div>
